@@ -45,30 +45,17 @@
 
 ---
 
-## 二、安装（一次性）
+## 二、安装（一句话）
 
-### 方式一：装成豆包 Skill（推荐，普通用户不用碰命令行）
+**对你的豆包（或任意支持装技能的 agent）说一句话：**
 
-1. **下载本项目**：打开仓库页 [github.com/zyangpm/job_track](https://github.com/zyangpm/job_track)，点绿色 **Code → Download ZIP**（或用 `git clone https://github.com/zyangpm/job_track.git`），解压
-2. **把解压出来的整个文件夹**（可以改个顺手的名字，比如 `job_track`）放进豆包的技能目录：
-   - Win+R 输入 `%USERPROFILE%\DoubaoWork\skills` 回车打开，把文件夹**整个复制进去**
-   - （如果在豆包办公里，也可以：设置 → 技能/智能体 → 技能目录 打开）
-3. **重启豆包办公**（或新开一个对话），它会自动把这个文件夹识别成 Skill
-4. 对话里直接说：**「用秋招追踪 skill」**，然后让豆包帮你完成剩下的安装步骤（装依赖、启动服务、打开看板）。也可以自己双击文件夹里的 `启动追踪表.bat`
+> 安装 GitHub 上的 zyangpm/job_track 项目
 
-> 装好之后，豆包就知道你有这个 Skill 了，以后每次说"帮我扫邮箱""查投递状态"它都会调用它。
+它就会自动完成全部安装：下载项目 → 装成 Skill → 安装依赖 → 启动服务 → 打开看板。装好之后你再说"帮我扫邮箱""查投递状态"，它就直接用这个 Skill 干活。
 
-### 方式二：直接命令行运行（不装 Skill，纯本地使用）
+**所有用户都是这一句话，不需要碰命令行。**
 
-打开命令行（Win+R 输入 `cmd`），进入本文件夹：
-
-```bash
-cd 解压出来的文件夹路径
-pip install -r requirements.txt
-playwright install chromium
-```
-
-第二行是安装 AI 添加和官网巡检需要的浏览器内核（约 150MB，只装一次）。
+> 不用 agent 的话，手动安装也只需要两步：仓库页点 **Code → Download ZIP** 解压 → 双击 `启动追踪表.bat`（首次使用先点右上角「设置」配邮箱授权码和模型 API Key，见下节）。依赖：Python 3.10+，见上文准备清单。
 
 ---
 
