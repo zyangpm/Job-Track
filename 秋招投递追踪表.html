@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2027秋招投递追踪</title>
+<style>
+:root {
+  --paper: #f5f0e6;
+  --paper-deep: #efe8d8;
+  --ink: #2b2620;
+  --ink-soft: #6b6353;
+  --ink-faint: #a39a86;
+  --gold-line: #ddd0b4;
+  --gold-soft: #e9dfc9;
+  --red: #b03a2e;
+  --red-deep: #8e2b21;
+  --red-soft: #f7e8e5;
+  --amber: #c07f1f;
+  --card-bg: #fffdf8;
+  --shadow: 0 2px 10px rgba(80, 66, 40, 0.06);
+  --shadow-hover: 0 8px 24px rgba(80, 66, 40, 0.10);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--paper);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(160,140,100,0.018) 0 2px, transparent 2px 8px),
+    repeating-linear-gradient(-45deg, rgba(160,140,100,0.014) 0 2px, transparent 2px 10px);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 1060px; margin: 0 auto; padding: 0 28px 60px; }
+
+/* Header（顶部朱红书脊带 + 印章） */
+.header {
+  position: relative;
+  padding: 44px 0 30px;
+  border-bottom: 1px solid var(--gold-line);
+  margin-bottom: 24px;
+}
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -28px; right: -28px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--red-deep) 50%, var(--red) 100%);
+}
+.header .eyebrow {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--red);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.header h1 {
+  font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.header .subtitle { color: var(--ink-soft); font-size: 14px; }
+.hero-seal {
+  position: absolute;
+  right: 0; top: 44px;
+  width: 64px; height: 64px;
+  border: 2px solid var(--red);
+  border-radius: 10px;
+  color: var(--red);
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-weight: 900;
+  font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl;
+  letter-spacing: 2px;
+  transform: rotate(3deg);
+  background: rgba(176,58,46,0.04);
+}
+
+/* Stats（长卷式） */
+.stats {
+  display: flex;
+  align-items: stretch;
+  background: var(--card-bg);
+  border: 1px solid var(--gold-line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-top: 26px;
+}
+.stat-card {
+  flex: 1;
+  padding: 20px 10px 16px;
+  text-align: center;
+  position: relative;
+}
+.stat-card + .stat-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: var(--gold-soft);
+}
+.stat-card .num {
+  font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.stat-card .label { font-size: 12px; color: var(--ink-faint); margin-top: 4px; letter-spacing: 1px; }
+
+/* 操作台（搜索 + 按钮 + 筛选胶囊） */
+.console {
+  background: var(--card-bg);
+  border: 1px solid var(--gold-line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+.search-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;          /* 一行，不换行 */
+  align-items: center;
+  margin-bottom: 14px;
+}
+.search-row .search-box { min-width: 90px; flex: 1 1 auto; }
+.search-row .btn, .search-row .btn-primary, .search-row .btn-secondary {
+  flex-shrink: 0; padding: 9px 14px; font-size: 13px; border-radius: 8px;
+}
+@media (max-width: 900px) {
+  .search-row { flex-wrap: wrap; }
+}
+.search-box {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px 18px;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 999px;
+  font-size: 14px;
+  outline: none;
+  background: var(--paper);
+  color: var(--ink);
+  transition: all 0.2s;
+}
+.search-box:focus { border-color: var(--red); background: #fff; box-shadow: 0 0 0 3px rgba(176,58,46,0.10); }
+.search-box::placeholder { color: var(--ink-faint); }
+.btn {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.btn:active { transform: translateY(0); }
+.btn-primary { background: var(--ink); color: #f7f2e7; box-shadow: 0 2px 8px rgba(43,38,32,0.25); }
+.btn-secondary { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--gold-line); }
+.btn-secondary:hover { border-color: var(--ink-soft); color: var(--ink); }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-sm { padding: 7px 14px; font-size: 13px; border-radius: 8px; }
+.btn-xs { padding: 5px 11px; font-size: 12px; border-radius: 6px; }
+/* 下面两组之前没定义，按钮会显示成浏览器默认的灰底 —— 补上 */
+.btn-s { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--gold-line); }
+.btn-s:hover { border-color: var(--ink-soft); color: var(--ink); }
+.btn-p { background: var(--ink); color: #f7f2e7; box-shadow: 0 2px 8px rgba(43,38,32,0.25); }
+.btn-ai { background: var(--red); color: #fff; box-shadow: 0 2px 8px rgba(176,58,46,0.25); }
+
+/* Toolbar（筛选胶囊） */
+.toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px dashed var(--gold-line);
+}
+.filter-btn {
+  padding: 7px 16px;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: all 0.18s;
+}
+.filter-btn:hover { border-color: var(--red); color: var(--red); }
+.filter-btn.active {
+  background: var(--red); color: #fff; border-color: var(--red);
+  box-shadow: 0 2px 8px rgba(176,58,46,0.25);
+}
+
+/* Reminder banner */
+.reminder-banner {
+  background: linear-gradient(90deg, var(--red-soft), #fdf3ec);
+  border: 1px solid #ecc9bf;
+  border-left: 4px solid var(--red);
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--red-deep);
+}
+.reminder-banner b { font-weight: 700; }
+.reminder-banner .item { margin-top: 4px; color: var(--ink); }
+
+/* 报告双联（邮箱扫描 / 官网巡检） */
+.report-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 14px 0 6px;
+}
+.report-card {
+  background: var(--card-bg);
+  border: 1px solid var(--gold-line);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.report-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+}
+.report-card.scan::before { background: #4a7c59; }
+.report-card.patrol::before { background: #2f6f6b; }
+.report-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+.report-card.scan .report-title { color: #4a7c59; }
+.report-card.patrol .report-title { color: #2f6f6b; }
+.report-body { font-size: 13px; color: var(--ink-soft); line-height: 1.8; }
+
+/* Group section */
+.group-section { margin-bottom: 8px; }
+.group-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 30px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold-line);
+}
+.group-title .count {
+  margin-left: auto;
+  color: var(--red);
+  font-weight: 900;
+  font-size: 18px;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+.group-dot {
+  width: 24px; height: 24px; border-radius: 7px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 13px; font-weight: 700;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* Card（白卡细金边） */
+.card-list { display: flex; flex-direction: column; gap: 14px; }
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--gold-line);
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--gold-line);
+  transition: all 0.18s;
+}
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  border-color: #cbbb95;
+}
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2px;
+}
+.card-company {
+  font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--ink);
+}
+.card-location {
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: var(--gold-soft);
+  padding: 3px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.card-job {
+  color: var(--red);
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.card-meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-bottom: 8px;
+}
+.card-meta b { color: var(--ink); font-weight: 600; }
+.card-note {
+  font-size: 13px;
+  color: var(--amber);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.card-bottom select {
+  padding: 7px 12px;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.card-bottom select:focus { border-color: var(--red); }
+.quick-link-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: #f7f2e7;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.18s;
+}
+.quick-link-btn:hover { background: var(--red); transform: translateY(-1px); }
+.quick-link-btn.disabled {
+  background: var(--gold-soft); color: var(--ink-faint);
+  box-shadow: none; pointer-events: none;
+}
+.due-badge {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.due-overdue { background: var(--red-soft); color: var(--red-deep); border: 1px solid #ecc9bf; }
+.due-soon { background: #fdf3e3; color: var(--amber); border: 1px solid #eed9ae; }
+.due-normal { background: var(--paper-deep); color: var(--ink-soft); }
+.card-actions { margin-left: auto; display: flex; gap: 4px; }
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: var(--ink-faint);
+  transition: all 0.15s;
+}
+.icon-btn:hover { background: var(--paper-deep); color: var(--ink); }
+.icon-btn.del:hover { color: var(--red); background: var(--red-soft); }
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(43,38,32,0.35);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--card-bg);
+  border: 1px solid var(--gold-line);
+  border-radius: 18px;
+  padding: 32px;
+  width: 90%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 32px rgba(43,38,32,0.15);
+}
+.modal h2 {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 20px; margin-bottom: 24px; font-weight: 900;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--ink-soft); }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  background: #fff;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(176,58,46,0.10); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+/* Status manager */
+.status-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gold-soft);
+}
+.status-item:last-child { border-bottom: none; }
+.status-item .left { display: flex; align-items: center; gap: 12px; }
+.status-dot { width: 14px; height: 14px; border-radius: 50%; }
+.status-item .label-text { font-size: 15px; font-weight: 500; }
+.status-item .built-in-tag {
+  font-size: 11px; color: var(--ink-faint); background: var(--paper-deep); padding: 3px 8px; border-radius: 6px;
+}
+.add-status-row { display: flex; gap: 10px; margin-top: 20px; }
+.add-status-row input {
+  flex: 1; padding: 10px 14px; border: 1.5px solid var(--gold-line); border-radius: 10px; font-size: 14px; outline: none;
+  background: #fff;
+}
+.add-status-row input:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(176,58,46,0.10); }
+
+.empty { text-align: center; padding: 80px; color: var(--ink-faint); font-size: 15px; }
+
+@media (max-width: 720px) {
+  .container { padding: 0 16px 48px; }
+  .header h1 { font-size: 26px; }
+  .hero-seal { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .card { padding: 18px; }
+  .card-company { font-size: 17px; }
+  .stats { flex-wrap: wrap; }
+  .stat-card { flex: 1 1 33%; }
+  .stat-card + .stat-card::before { display: none; }
+  .report-row { grid-template-columns: 1fr; }
+}
+
+/* ═══ 日程日历（跟着投递记录自动走）═══ */
+.cal-panel{background:#fff;border:1px solid #ece4d6;border-radius:10px;margin:14px 0;overflow:hidden}
+.cal-head{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none}
+.cal-head h3{margin:0;font-size:15px;white-space:nowrap}
+.cal-head .cal-sub{font-size:12px;color:#9a9a9a;flex:1;line-height:1.6}
+.cal-arrow{color:#b0b0b0;transition:.2s}
+.cal-panel.open .cal-arrow{transform:rotate(180deg)}
+.cal-body{display:none;padding:0 18px 18px;border-top:1px solid #f3ecdf}
+.cal-panel.open .cal-body{display:block}
+.cal-nav{display:flex;align-items:center;gap:10px;padding:12px 0}
+.cal-nav b{font-size:15px}
+.cal-nav .btn{padding:4px 12px;font-size:13px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal-dow{text-align:center;font-size:12px;color:#9a9a9a;padding:4px 0}
+.cal-day{min-height:66px;border:1px solid #f3ecdf;border-radius:6px;padding:4px;font-size:12px;min-width:0}
+.cal-day.out{background:#faf8f3;color:#cfc8ba}
+.cal-day.today{border-color:#b03a2e;background:#fdf6f4}
+.cal-day .dn{font-weight:700;display:block;margin-bottom:1px}
+/* 格子里每个事件一条：公司名+时间，短文本不撑列，hover 看完整详情 */
+.cal-ev{display:block;margin-top:3px;padding:1px 6px;border-radius:3px;font-size:10.5px;color:#fff;
+  cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.55}
+.cal-ev:hover{opacity:.85}
+.cal-ev.more{background:#ece4d6!important;color:#7a6f5d;text-align:center;cursor:default}
+.cal-ev.more:hover{opacity:1}
+/* 悬浮详情浮层 */
+#calPop{position:fixed;z-index:9999;max-width:280px;min-width:180px;background:#fffdf8;
+  border:1px solid #e8dcc8;border-radius:8px;box-shadow:0 8px 28px rgba(60,40,20,.18);
+  padding:10px 12px;font-size:12.5px;line-height:1.75;color:#4a4a4a;display:none;pointer-events:none}
+#calPop .pp-kind{display:inline-block;font-size:11px;font-weight:700;color:#fff;padding:1px 9px;border-radius:3px;margin-bottom:6px}
+#calPop .pp-row{color:#555}
+#calPop .pp-hint{margin-top:7px;padding-top:6px;border-top:1px dashed #e8dcc8;color:#b03a2e;font-size:11.5px}
+.cal-up{margin-top:14px}
+.cal-up-row{display:flex;gap:9px;align-items:center;padding:7px 0;border-bottom:1px dashed #f3ecdf;font-size:13px}
+.cal-up-d{font-size:12px;padding:2px 8px;border-radius:10px;color:#fff;white-space:nowrap}
+.cal-up-del{margin-left:auto;color:#b03a2e;cursor:pointer;font-size:12px;white-space:nowrap}
+.cal-up-del:hover{text-decoration:underline}
+
+/* 待办提醒每条后面的"不再显示"小叉 */
+.remind-x{float:right;cursor:pointer;color:#b03a2e;font-weight:700;font-size:15px;line-height:1;
+  padding:0 4px;opacity:.55;transition:.15s}
+.remind-x:hover{opacity:1;background:#fdeceb;border-radius:3px}
+
+/* 扫描/巡检报告的详情框 */
+.rep-box{margin-top:10px;border:1px solid #ece4d6;border-radius:8px;padding:10px 12px;background:#fffdf8;text-align:left}
+.rep-box-warn{border-color:#f0c9c4;background:#fdf6f5}
+.rep-t{font-size:12.5px;font-weight:700;color:#4a4a4a;margin-bottom:7px}
+.rep-list{max-height:260px;overflow-y:auto}
+.rep-row{font-size:12.5px;color:#555;line-height:1.7;padding:4px 0;border-bottom:1px dashed #f3ecdf}
+.rep-row:last-child{border-bottom:0}
+.rep-dim{color:#999;font-size:11.5px}
+.rep-warn{color:#c0392b;font-size:11.5px;font-weight:700}
+.rep-ok{color:#2e7d32;font-size:11.5px;font-weight:700}
+.rep-add{float:right;font-size:12px;font-weight:400;color:#2f6f6b;cursor:pointer;
+  font-family:inherit;border:1px solid #cfe0dd;border-radius:10px;padding:1px 9px;background:#f2f8f7}
+.rep-add:hover{background:#e6f2f0}
+/* 巡检公司列表 */
+.pt-li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed #f3ecdf;font-size:13px}
+.pt-li:last-child{border-bottom:0}
+.pt-li .pt-n{font-weight:700;color:var(--ink);flex-shrink:0}
+.pt-li .pt-u{color:#999;font-size:11.5px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pt-li.off{opacity:.5}
+.pt-tag{font-size:11px;padding:1px 7px;border-radius:9px;flex-shrink:0}
+.pt-tag.on{background:#e8f5e9;color:#2e7d32}
+.pt-tag.off{background:#f3efe7;color:#8a8175}
+
+/* 报告默认收起：点标题展开 */
+.rep-box>summary{cursor:pointer;list-style:none;user-select:none}
+.rep-box>summary::-webkit-details-marker{display:none}
+.rep-box>summary::before{content:"▸ ";color:#b03a2e;font-weight:700}
+.rep-box[open]>summary::before{content:"▾ "}
+.rep-box>summary:hover{color:#b03a2e}
+
+/* 登录信息卡片（跟新增记录弹窗同一套样式） */
+.modal-lede{font-size:13px;color:var(--ink-soft);line-height:1.85;margin:0 0 16px;max-width:70ch}
+.modal-foot-note{flex:1;font-size:12px;color:var(--ink-faint)}
+.set-sec{border:1px solid #e5e7eb;border-radius:12px;padding:14px 16px;margin:0 0 14px}
+.set-sec-title{font-size:14px;font-weight:700;margin-bottom:12px;color:#1e293b;display:flex;align-items:center;gap:6px}
+.set-sec-title::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;background:#6b5b95}
+.setup-banner{display:none;align-items:center;gap:12px;background:#fff7e6;border:1px solid #f2cf8c;color:#7a5c1e;border-radius:12px;padding:10px 16px;margin:14px 0 4px;font-size:14px;line-height:1.6}
+.setup-banner .btn{margin-left:auto;flex-shrink:0}
+.banner-x{cursor:pointer;font-size:18px;color:#b8955a;flex-shrink:0;padding:0 4px}
+.banner-x:hover{color:#7a5c1e}
+.login-empty{border:1px dashed var(--gold-line);border-radius:6px;padding:22px 16px;text-align:center;
+  font-size:13px;color:var(--ink-faint);margin-bottom:14px}
+.login-card{border:1px solid var(--gold-line);border-radius:6px;background:#fffdf8;
+  padding:14px 16px 4px;margin-bottom:14px}
+.login-card-h{display:flex;align-items:center;gap:10px;padding-bottom:10px;margin-bottom:12px;
+  border-bottom:1px solid var(--gold-line)}
+.login-card-n{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;
+  font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.login-card-h input{border:0;background:transparent;font-family:var(--serif);font-size:16px;
+  font-weight:700;color:var(--ink);padding:0;flex:1}
+.login-card-h input:focus{outline:none;border-bottom:1px solid var(--red)}
+.rep-acts{margin-top:8px}
+
+/* 弹窗里的按钮（之前没定义样式，显示成浏览器默认的样子）*/
+.mbtn{border:0;border-radius:4px;padding:9px 20px;font-size:13.5px;cursor:pointer;font-family:inherit;
+  transition:transform .12s ease, filter .12s ease}
+.mbtn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.mbtn:active{transform:translateY(0)}
+.mbtn-s{background:transparent;color:var(--ink-soft);border:1.5px solid var(--gold-line)}
+.mbtn-s:hover{border-color:var(--ink-soft);color:var(--ink)}
+.mbtn-p{background:var(--ink);color:#f7f2e7;box-shadow:0 2px 8px rgba(43,38,32,.25)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;align-items:center;margin-top:18px}
+@media (prefers-reduced-motion:reduce){.mbtn{transition:none}}
+
+/* 报告里状态的色块（跟日期区分开） */
+.rep-st{display:inline-block;font-size:11.5px;font-weight:700;color:var(--ink);
+  background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:3px;
+  padding:1px 7px;margin-left:2px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="eyebrow">AUTUMN RECRUITMENT · 2027</div>
+    <h1>2027秋招投递追踪</h1>
+    <div class="subtitle">已投递 + 内推码收藏 + 最近新加 · 直达官方校招网 · 状态日期本机自动保存</div>
+    <div class="hero-seal">秋招</div>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div id="reminderBanner"></div>
+  <div id="setupBanner" class="setup-banner"></div>
+
+  <!-- ═══ 日程日历：自动跟着投递记录走 ═══ -->
+  <div class="cal-panel" id="calPanel">
+    <div class="cal-head" onclick="toggleCal()">
+      <h3>日程日历</h3>
+      <span class="cal-sub">状态是「笔试 / 测评 / 面试 / AI面试」、又填了「截止日期」的记录，会自动出现在这里 —— 点日历上的条目就能删掉</span>
+      <span class="cal-arrow">▾</span>
+    </div>
+    <div class="cal-body">
+      <div class="cal-nav">
+        <button class="btn" onclick="event.stopPropagation();shiftCal(-1)">←</button>
+        <b id="calT"></b>
+        <button class="btn" onclick="event.stopPropagation();shiftCal(1)">→</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-up" id="calUp"></div>
+    </div>
+  </div>
+  <div id="calPop"></div>
+
+  <div class="console">
+    <div class="search-row">
+      <input class="search-box" id="search" placeholder="搜公司 / 岗位...">
+      <button class="btn btn-primary" onclick="openModal()">+ 新增</button>
+      <button class="btn btn-primary" style="background:#6d4c7d" onclick="openAiModal()">AI 添加</button>
+      <button class="btn btn-primary" style="background:#4a7c59" onclick="triggerScan()">扫描邮箱</button>
+      <button class="btn btn-primary" style="background:#2f6f6b" onclick="triggerPatrol()">官网巡检</button>
+        <button class="btn btn-primary" style="background:#6b5b95" onclick="openLogins()">登录信息</button>
+      <button class="btn btn-secondary" onclick="openStatusModal()">管理状态</button>
+      <button class="btn btn-secondary" onclick="openSettings()">设置</button>
+      <button class="btn btn-secondary" onclick="exportJSON()">导出</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">导入</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
+    </div>
+    <div class="toolbar" id="toolbar">
+      <!-- filter buttons injected by JS -->
+    </div>
+  </div>
+
+  <!-- 任务报告面板：邮箱扫描 + 官网巡检 -->
+  <div class="report-row">
+    <div class="report-card scan">
+      <div class="report-title">邮箱扫描报告</div>
+      <div id="scanStatus" class="report-body"></div>
+    </div>
+    <div class="report-card patrol">
+      <div class="report-title">官网巡检报告<span class="rep-add" onclick="openPatrolTargets()">＋ 添加公司</span></div>
+      <div id="patrolStatus" class="report-body"></div>
+    </div>
+  </div>
+
+  <div id="cardContainer"></div>
+  <div class="empty" id="emptyState" style="display:none">暂无记录，点击「新增」添加投递</div>
+</div>
+
+<!-- AI 添加 Modal：粘贴网址+岗位，DeepSeek 自动识别其余字段 -->
+<div class="modal-overlay" id="aiModalOverlay">
+  <div class="modal">
+    <h2>AI 添加投递</h2>
+    <div class="form-group">
+      <label>招聘网址</label>
+      <input id="aiUrl" placeholder="https://...">
+    </div>
+    <div class="form-group">
+      <label>岗位（可留空，AI 会尝试识别；输入过的岗位会自动出现在下拉里）</label>
+      <input id="aiJob" list="jobList" placeholder="如：产品运营">
+    </div>
+    <div class="form-group">
+      <label>内推码（可留空）</label>
+      <input id="aiReferral" placeholder="如：NTA6DER">
+    </div>
+    <div id="aiMsg" style="display:none;font-size:13px;padding:8px 12px;border-radius:8px;margin-bottom:10px"></div>
+    <div style="font-size:12px;color:#999;line-height:1.6;margin-bottom:10px">
+      投递日期自动填今天；公司、地点、内推码、截止时间等由 DeepSeek 从网页自动识别。
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeAiModal()">取消</button>
+      <button class="btn btn-primary" style="background:#7c5cbf" id="aiSubmitBtn" onclick="submitAiJob()">识别并添加</button>
+    </div>
+  </div>
+</div>
+
+<!-- 设置 Modal：邮箱 + AI 模型（普通用户在此配置，不用手动改文件） -->
+<div class="modal-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
+  <div class="modal" style="max-width:680px">
+    <h2>设置</h2>
+    <p class="modal-lede">配置一次就记住，只存在你这台电脑上，不会上传。邮箱支持 Gmail / QQ / 163 / 126 / Outlook；AI 模型支持 DeepSeek、OpenAI、Kimi、通义千问、智谱、豆包、硅基流动、Ollama 等。选中提供商后服务器和模型名会自动填好，你只需要填 API Key / 授权码。</p>
+
+    <div class="set-sec">
+      <div class="set-sec-title">邮箱配置（扫招聘邮件用）</div>
+      <div class="form-group">
+        <label>邮箱提供商</label>
+        <select id="setMailProvider" onchange="applyMailPreset()">
+          <option value="gmail">Gmail（谷歌）</option>
+          <option value="qq">QQ 邮箱</option>
+          <option value="163">163 邮箱</option>
+          <option value="126">126 邮箱</option>
+          <option value="outlook">Outlook / Hotmail（微软）</option>
+          <option value="other">其他邮箱（手动填服务器）</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>邮箱地址</label>
+        <input id="setGmail" placeholder="你的邮箱@xxx.com" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label id="setMailPwdLabel">应用专用密码 / 授权码</label>
+        <input id="setGmailPwd" type="password" placeholder="已设置则留空保持不变" autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label>收信服务器（选中提供商后自动填好，一般不用动）</label>
+        <input id="setImap" placeholder="imap.gmail.com">
+      </div>
+      <details class="set-help" id="setMailHelp">
+        <summary>怎么获取应用专用密码 / 授权码？（点开看教程）</summary>
+        <div id="setMailHelpBody"></div>
+      </details>
+    </div>
+
+    <div class="set-sec">
+      <div class="set-sec-title">AI 模型配置（识别公司 / 岗位 / 状态用）</div>
+      <div class="form-group">
+        <label>提供商</label>
+        <select id="setProvider" onchange="applyProviderPreset()">
+          <option value="deepseek">DeepSeek（默认）</option>
+          <option value="openai">OpenAI（ChatGPT）</option>
+          <option value="moonshot">Kimi（月之暗面）</option>
+          <option value="qwen">通义千问（阿里）</option>
+          <option value="zhipu">智谱 GLM</option>
+          <option value="volcengine">火山方舟 / 豆包</option>
+          <option value="siliconflow">硅基流动 SiliconFlow</option>
+          <option value="ollama">Ollama（本地免费）</option>
+          <option value="custom">其他（OpenAI 兼容接口）</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>模型名（选中提供商后自动列出，也可以手动输入）</label>
+        <input id="setModel" list="modelSuggestions" placeholder="选中提供商后自动列出可选模型">
+        <datalist id="modelSuggestions"></datalist>
+      </div>
+      <div class="form-group">
+        <label>API Key（Ollama 本地模型可留空）</label>
+        <input id="setApiKey" type="password" placeholder="已设置则留空保持不变" autocomplete="new-password">
+        <div id="setKeyHint" style="display:none;font-size:12px;color:#999;margin-top:4px">Ollama 跑在本机，不需要 API Key，留空即可。</div>
+      </div>
+      <div class="form-group">
+        <label>接口地址（自动填好，一般不用动）</label>
+        <input id="setBaseUrl" placeholder="https://api.deepseek.com">
+      </div>
+    </div>
+
+    <div id="setMsg" style="display:none;font-size:13px;padding:8px 12px;border-radius:8px;margin-bottom:10px"></div>
+    <div class="modal-actions">
+      <span class="modal-foot-note">改完点「保存设置」立即生效，不用重启。</span>
+      <button class="btn btn-secondary" onclick="closeSettings()">关闭</button>
+      <button class="btn btn-primary" style="background:#6b5b95" onclick="saveSettings()">保存设置</button>
+    </div>
+  </div>
+</div>
+
+<!-- 记录编辑 Modal -->
+<!-- 登录信息管理（记住各公司账号/密码/手机号，登录时自动填） -->
+<div class="modal-overlay" id="loginsOverlay" onclick="if(event.target===this)closeLogins()">
+  <div class="modal" style="max-width:820px">
+    <h2>登录信息</h2>
+    <p class="modal-lede">填一次就记住了。以后巡检遇到要登录的公司，会<b>自动帮你填好账号和密码</b>，你只需要手输验证码。
+      这些信息<b>只存在你这台电脑上</b>，不会跟着软件发给别人。</p>
+    <div id="loginsList"></div>
+    <datalist id="loginCompanyList"></datalist>
+    <datalist id="loginAccountList"></datalist>
+    <datalist id="loginPhoneList"></datalist>
+    <datalist id="loginPwdList"></datalist>
+    <div class="modal-actions">
+      <span class="modal-foot-note" id="loginsState"></span>
+      <button class="mbtn mbtn-s" onclick="addLoginRow()">加一家公司</button>
+      <button class="mbtn mbtn-p" onclick="saveLogins()">保存</button>
+      <button class="mbtn mbtn-s" onclick="closeLogins()">关闭</button>
+    </div>
+  </div>
+</div>
+<!-- 巡检公司管理（加公司/网址/别名，点登录弹浏览器） -->
+<div class="modal-overlay" id="patrolTargetsOverlay" onclick="if(event.target===this)closePatrolTargets()">
+  <div class="modal" style="max-width:860px">
+    <h2>巡检公司</h2>
+    <p class="modal-lede">软件会自动巡检这些公司的校招官网，看你的投递状态。填好<b>登录网址</b>，点「打开浏览器登录」就能登录（账号密码自动填，验证码你自己输）。</p>
+    <div class="form-row">
+      <div class="form-group"><label>公司名（必填，可下拉选台账里的公司，也能手输新公司）</label><input id="ptCompany" list="ptCompanyList" placeholder="如：腾讯" oninput="autoFillUrlFromRecords()"><datalist id="ptCompanyList"></datalist></div>
+      <div class="form-group"><label>登录网址（选台账公司会自动带出，可改）</label><input id="ptUrl" placeholder="https://join.qq.com/"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>别名（逗号分隔，可空）</label><input id="ptAliases" placeholder="如：腾讯,QQ"></div>
+      <div class="form-group"><label>备注（可空）</label><input id="ptNote" placeholder="如：要扫码"></div>
+    </div>
+    <div class="modal-actions" style="margin-bottom:6px">
+      <span class="modal-foot-note" id="ptState"></span>
+      <button class="mbtn mbtn-p" onclick="savePatrolTarget()">保存这家</button>
+    </div>
+    <div id="patrolPendingList"></div>
+    <div id="patrolTargetsList"></div>
+    <div class="modal-actions">
+      <button class="mbtn mbtn-s" onclick="closePatrolTargets()">关闭</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2 id="modalTitle">新增投递记录</h2>
+    <div class="form-group">
+      <label>公司名称</label>
+      <input id="fCompany" placeholder="如：腾讯">
+    </div>
+    <div class="form-group">
+      <label>岗位（输入过的岗位会自动出现在下拉里）</label>
+      <input id="fJob" list="jobList" placeholder="如：产品运营">
+      <datalist id="jobList"></datalist>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>地点</label>
+        <input id="fLocation" placeholder="如：北京">
+      </div>
+      <div class="form-group">
+        <label>投递方式</label>
+        <select id="fChannel">
+          <option value="官网网申">官网网申</option>
+          <option value="牛客网">牛客网</option>
+          <option value="内推">内推</option>
+          <option value="BOSS直聘">BOSS直聘</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>投递日期</label>
+        <input id="fDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>状态</label>
+        <select id="fStatus"></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>官网直达链接（网申页面地址）</label>
+      <input id="fUrl" type="url" placeholder="https://...">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>收到信息时间</label>
+        <input id="fReceiveDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>截止日期 / 时间（几点）</label>
+        <div style="display:flex;gap:8px">
+          <input id="fDueDate" type="date" style="flex:1.35">
+          <input id="fDueTime" type="time" style="flex:1" title="几点？可留空">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>提前提醒天数</label>
+      <input id="fRemindDays" type="number" min="0" value="1" placeholder="1">
+    </div>
+    <div class="form-group">
+      <label>备注（内推码/进度/链接等）</label>
+      <textarea id="fNote" rows="2" placeholder="如：内推码ABC123，远程面试等笔试"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveRecord()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 状态管理 Modal -->
+<div class="modal-overlay" id="statusModalOverlay">
+  <div class="modal">
+    <h2>管理状态</h2>
+    <p style="font-size:14px;color:#64748b;margin-bottom:12px">自定义你的投递状态，默认状态不可删除。</p>
+    <div id="statusList"></div>
+    <div class="add-status-row">
+      <input id="newStatusName" placeholder="输入新状态名称，如：电话面" onkeydown="if(event.key==='Enter')addStatus()">
+      <button class="btn btn-primary btn-sm" onclick="addStatus()">+ 添加</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeStatusModal()">完成</button>
+    </div>
+  </div>
+</div>
+
+<!-- 内嵌数据块：dashboard.py 每次同步会重写这个 JSON，version 变化触发浏览器合并 -->
+<script type="application/json" id="embeddedData"> {"version": 0, "records": [], "statuses": [{"key": "undelivered", "label": "未投递", "color": "#f59e0b", "builtIn": false}, {"key": "applied", "label": "已投递", "color": "#3b82f6", "builtIn": true}, {"key": "in_progress", "label": "简历筛选中", "color": "#334155", "builtIn": false}, {"key": "passed_first", "label": "通过初筛", "color": "#10b981", "builtIn": false}, {"key": "assess", "label": "测评", "color": "#14b8a6", "builtIn": true}, {"key": "assess_done", "label": "测评完成", "color": "#06b6d4", "builtIn": false}, {"key": "test", "label": "笔试", "color": "#f97316", "builtIn": true}, {"key": "test_done", "label": "笔试完成", "color": "#f59e0b", "builtIn": false}, {"key": "aiiv", "label": "AI面试", "color": "#ec4899", "builtIn": true}, {"key": "aiiv_done", "label": "AI面试完成", "color": "#f43f5e", "builtIn": false}, {"key": "interview", "label": "面试", "color": "#8b5cf6", "builtIn": true}, {"key": "interview_done", "label": "面试完成", "color": "#a855f7", "builtIn": false}, {"key": "offer", "label": "Offer", "color": "#22c55e", "builtIn": true}, {"key": "talent", "label": "进入人才库", "color": "#64748b", "builtIn": false}, {"key": "rejected", "label": "已挂", "color": "#94a3b8", "builtIn": true}]} </script>
+
+<script>
+/* 本地服务地址：双击打开（file://）时也能连上服务。端口 8768，和原版 8765 隔离 */
+var LOCAL_API = (location.protocol === 'file:') ? 'http://127.0.0.1:8768' : '';
+
+const EMBEDDED = JSON.parse(document.getElementById('embeddedData').textContent);
+const RECORDS_KEY = 'campaign_tracker_v1';
+const STATUSES_KEY = 'campaign_statuses_v1';
+const JOBS_KEY = 'campaign_jobs_v1';
+
+const DEFAULT_STATUSES = [
+  { key: 'applied',   label: '已投递',  color: '#3b82f6', builtIn: true },
+  { key: 'assess',    label: '测评',    color: '#14b8a6', builtIn: true },
+  { key: 'aiiv',      label: 'AI面试',  color: '#ec4899', builtIn: true },
+  { key: 'test',      label: '笔试',    color: '#f97316', builtIn: true },
+  { key: 'interview', label: '面试',    color: '#8b5cf6', builtIn: true },
+  { key: 'offer',     label: 'Offer',   color: '#22c55e', builtIn: true },
+  { key: 'rejected',  label: '已挂',    color: '#94a3b8', builtIn: true }
+];
+
+const PALETTE = [
+  '#f59e0b', '#ec4899', '#10b981', '#eab308',
+  '#f43f5e', '#8b5cf6', '#fb923c', '#06b6d4',
+  '#3b82f6', '#f97316', '#22c55e', '#334155'
+];
+
+let statuses = [];
+let records = [];
+let jobHistory = [];
+let currentFilter = 'all';
+let searchQuery = '';
+let editingId = null;
+
+/* (发布版已移除原版 DEFAULT_DATA 演示数据，避免新用户看到旧公司记录) */
+
+/* ═══ 公司名多层清洗（邮件扫描来的脏数据在这里被救回来或丢掉）═══
+   第1层 去前后缀垃圾： "感谢您申请TCL"→"TCL"、"并应聘基恩士"→"基恩士"、"您可以登录科大讯飞"→"科大讯飞"
+   第2层 纯标题直接丢： "关于我们"、"我们是谁"
+   第3层 去后缀噪音： "网易招聘"→"网易"、"京东校招"→"京东"、"X在线"→"X"
+   返回空串 = 这条是垃圾，丢掉 */
+function cleanCompanyName(name){
+  var s = String(name||'').replace(/\s+/g,' ').trim();
+  if(!s) return '';
+  s = s.replace(/^感谢您(申请|投递|应聘|投递了|已投递|报名|关注)\s*/,'');
+  s = s.replace(/^(并|已|我|您|请|此|本)?(可以|能|可|要)?(应聘|申请|投递|登录|登陆|报名|关注|查看|收到)\s*/,'');
+  s = s.replace(/^(恭喜您|您好|尊敬的|亲爱的)[^,，。:：]{0,8}(申请|投递|应聘)?\s*/,'');
+  if(/^(关于我们|我们是谁|公司简介|企业简介|集团简介|笔试邀请|参加测评方式|宣讲信息|宣讲会|简历投递回复|笔试注意事项|招聘公告|招聘信息|岗位介绍|投递须知|温馨提示|系统通知|此邮件由系统发出|尊敬的候选人)$/.test(s)) return '';
+  s = s.replace(/(在线|官方招聘|招聘官网|官方网站|官方|招聘系统|校园招聘|校招|招聘|官网|系统)$/,'');
+  s = s.trim();
+  if(s.length<2) return '';
+  if(/^(您好|谢谢|通知|提醒|邀请|测试|免费|系统|邮件|申请|投递)$/.test(s)) return '';
+  return s;
+}
+/* ── 待办提醒的"不再显示"清单（本机记住）── */
+var REMIND_HIDE_KEY='remind_hidden_v1';
+function remindHidden(){ try{ return JSON.parse(localStorage.getItem(REMIND_HIDE_KEY)||'[]'); }catch(e){ return []; } }
+function remindHide(key){
+  if(!key) return;
+  var a=remindHidden(); if(a.indexOf(key)<0) a.push(key);
+  try{ localStorage.setItem(REMIND_HIDE_KEY, JSON.stringify(a)); }catch(e){}
+  renderReminderBanner();
+}
+/** 一条提醒的唯一标识 */
+function remindKey(r){ return String(r.id!=null?r.id:((r.company||'')+'|'+(r.job||'')+'|'+(r.dueDate||''))); }
+/* ═══ 同公司合并：只留"证据链最多"的一条，其他岗位标进备注 ═══ */
+var CO_ALIAS={'apple':'苹果','iphone':'苹果','纽劢科技':'智驾新程'};   /* 纽劢科技 = 智驾新程（同一家，统一叫智驾新程）*/
+/* 岗位名是脏的（邮件标题残留）→ 等于没写岗位 */
+var BAD_JOB=/此邮件|信息不足|待人工复核|系统发出|^[\u2014\-\u2013]*$/;
+function hasJob(r){ var j=String(r.job||'').trim(); return !!j && !BAD_JOB.test(j); }
+function normCo(co){
+  var s=String(co||'').toLowerCase()
+    .replace(/[（(].*?[）)]/g,'')
+    .replace(/(股份)?有限公司|有限责任公司|集团|科技|网络|信息|文化|传媒|电子商务|控股/g,'')
+    .replace(/\s/g,'').trim();
+  return CO_ALIAS[s]||s;
+}
+var CO_TAIL = ["股份有限公司","有限责任公司","有限公司","集团","控股","公司","科技","网络","信息技术","技术服务","电子商务","文化传媒","文化","传媒","软件","电子"];
+function sameCompany(a,b){
+  /* 只有"前缀 + 公司后缀词"才算同一家：
+     "青木科技" + "股份有限公司" → 同一家 ✓
+     "网易" + "互娱" → 不是（子公司独立成条）✗ */
+  var na=normCo(a), nb=normCo(b);
+  if(!na||!nb) return false;
+  if(na===nb) return true;
+  var s=na.length<=nb.length?na:nb, L=na.length<=nb.length?nb:na;
+  if(L.indexOf(s)!==0 || s.length<2) return false;
+  var rest=L.slice(s.length);
+  for (var i=0;i<CO_TAIL.length;i++){
+    if (rest.indexOf(CO_TAIL[i])===0) rest=rest.slice(CO_TAIL[i].length);
+  }
+  return rest.length===0;
+}
+function evidenceScore(r){
+  var s=String(r.status||'').toLowerCase(), w=30;
+  if(/offer/.test(s)) w=100;
+  else if(/interview|面试|终面/.test(s)) w=80;
+  else if(/aiiv|ai面试/.test(s)) w=75;
+  else if(/assess|测评|test|笔试/.test(s)) w=70;
+  else if(/applied|已投递/.test(s)) w=50;
+  else if(/rejected|已挂|拒绝/.test(s)) w=45;
+  var sc=w;
+  if(hasJob(r)) sc+=25;
+  if(r.dueDate) sc+=20;
+  if(r.receiveDate) sc+=5;
+  if(r.note && !/信息不足|待人工复核/.test(r.note)) sc+=15;
+  if(r.location) sc+=5;
+  sc += Math.min(String(r.company||'').length,20)*0.4;
+  return sc;
+}
+function mergeSameCompany(list){
+  var groups=[];
+  list.forEach(function(r){
+    var g=groups.filter(function(x){ return sameCompany(x.items[0].company, r.company); })[0];
+    if(g) g.items.push(r); else groups.push({items:[r]});
+  });
+  return groups.map(function(g){
+    if(g.items.length===1) return g.items[0];
+    var best=g.items.slice().sort(function(a,b){ return evidenceScore(b)-evidenceScore(a); })[0];
+    var extra=[];
+    g.items.forEach(function(x){
+      if(x===best) return;
+      var jb=String(x.job||'').trim();
+      if(!jb || BAD_JOB.test(jb) || jb===String(best.job||'').trim()) return;
+      var tag=jb+(x.date?('（'+String(x.date).slice(0,7)+' 投）'):'');
+      if(extra.indexOf(tag)<0) extra.push(tag);
+    });
+    if(extra.length){
+      best.note=(best.note?best.note+'　':'')+'另投同公司其他岗：'+extra.join('；');
+    }
+    return best;
+  });
+}
+/* ── 删除墓碑：删掉的记录 id 记在本机，换个页面/重开也不再复活 ── */
+var DEL_IDS_KEY = 'deleted_rec_ids_v1';
+function deletedIds() {
+  try { return JSON.parse(localStorage.getItem(DEL_IDS_KEY) || "[]"); } catch(e) { return []; }
+}
+function markDeleted(id) {
+  if (id == null) return;
+  var a = deletedIds();
+  if (a.indexOf(id) < 0) a.push(id);
+  try { localStorage.setItem(DEL_IDS_KEY, JSON.stringify(a)); } catch(e) {}
+}
+function loadData() {
+  // 文件版本 vs 本机版本：文件更新 → 以文件为准（防止旧页面把新数据覆盖回去）
+  const _fileVer = Number(EMBEDDED.version || 0);
+  const _localVer = Number(localStorage.getItem('embedded_version') || 0);
+  // 文件版本为 0（干净模板）或比本机缓存新 → 以文件为准（防止旧页面把个人数据写回模板）
+  const _fileIsNewer = (_fileVer === 0) || (_fileVer > _localVer);
+  // 邮件同步的数据（dashboard.py 会重写内嵌 JSON 块）
+  const embeddedRecords = EMBEDDED.records || [];
+
+  // 读取浏览器本地已保存的手工记录
+  let localRecords = [], localStatuses = null, localJobs = [];
+  try {
+    const saved = localStorage.getItem(RECORDS_KEY);
+    if (saved) localRecords = JSON.parse(saved);
+  } catch(e) {}
+  try {
+    const ss = localStorage.getItem(STATUSES_KEY);
+    if (ss) localStatuses = JSON.parse(ss);
+  } catch(e) {}
+  try {
+    const js = localStorage.getItem(JOBS_KEY);
+    if (js) localJobs = JSON.parse(js);
+  } catch(e) {}
+
+  // ★ 文件比本机缓存新 → 以文件为准（本机缓存作废）
+  if (_fileIsNewer) {
+    console.log("[数据同步] 文件版本 " + _fileVer + " 比本机新，以文件为准");
+    localRecords = [];
+    // 同时清掉浏览器里的残留缓存，防止旧数据在下次保存时又写回文件
+    try { localStorage.removeItem(RECORDS_KEY); } catch(e) {}
+    try { localStorage.removeItem(STATUSES_KEY); } catch(e) {}
+    try { localStorage.removeItem(JOBS_KEY); } catch(e) {}
+  }
+  try { localStorage.setItem('embedded_version', String(_fileVer)); } catch(e) {}
+
+  // ===== 合并核心逻辑 =====
+  // 以 localRecords 为主，embeddedRecords 用来更新状态/日期
+  // 匹配键：公司名（小写去空格）
+  const makeKey = (r) => (r.company || '').toLowerCase().replace(/\s/g, '');
+  const embeddedMap = {};
+  embeddedRecords.forEach(r => { embeddedMap[makeKey(r)] = r; });
+
+  if (localRecords.length > 0) {
+    localRecords.forEach(r => {
+      const key = makeKey(r);
+      const e = embeddedMap[key];
+      if (e) {
+        // 邮件识别到了更新：只覆盖 status 和 date（更准确的投递日期）
+        // 但如果 mail 的状态是"已投递"且本地已有更具体的进度，则保留本地
+        if (e.status !== r.status) {
+          // 邮件识别优先级：拒信/offer/终面 > 本地手工状态
+          const rank = { 'rejected': 90, 'offer': 100, 'interview': 60, 'test': 50, 'assess': 40, 'applied': 10 };
+          const rLevel = rank[r.status] || 0;
+          const eLevel = rank[e.status] || 0;
+          if (eLevel >= rLevel || r.status === 'applied') {
+            r.status = e.status;
+            if (e.statusAt) r.statusAt = e.statusAt;   // 同步来源/时间，保持可追溯
+            if (e.statusBy) r.statusBy = e.statusBy;
+          }
+        }
+        // 如果 embedded 有具体日期且本地是空或模糊月，更新
+        if (e.date && (!r.date || r.date.length < 8)) {
+          r.date = e.date;
+        }
+        // 如果 embedded 有具体岗位且本地是空，补充
+        if (e.job && !r.job) r.job = e.job;
+        delete embeddedMap[key]; // 已合并，从 map 移除
+      }
+    });
+    // 剩下的 embedded 是全新公司 → 追加
+    Object.values(embeddedMap).forEach(e => localRecords.push(e));
+    records = localRecords;
+  } else {
+    records = embeddedRecords;
+  }
+
+  // 被用户删掉的记录，永远不要再出现（墓碑）
+  const _del = deletedIds();
+  if (_del.length) records = records.filter(r => _del.indexOf(r.id) < 0);
+
+  // ===== 垃圾记录清洗（多层规则，每次打开都跑）=====
+  const _beforePurge = records.length;
+  const _seenKey = {};
+  records = records.filter(r => {
+    const nc = (typeof cleanCompanyName === "function") ? cleanCompanyName(r.company) : String(r.company||"").trim();
+    if (!nc) return false;                 // 纯垃圾 → 丢
+    r.company = nc;                        // 能救的 → 改名
+    const k = nc + "||" + String(r.job||"").trim() + "||" + String(r.status||"");
+    if (_seenKey[k]) return false;          // 完全重复 → 合并
+    _seenKey[k] = 1;
+    return true;
+  });
+  if (records.length !== _beforePurge) {
+    console.log("已清洗记录", _beforePurge - records.length, "条");
+    try { localStorage.setItem(RECORDS_KEY, JSON.stringify(records)); } catch(e) {}
+    records = (typeof mergeSameCompany === "function") ? mergeSameCompany(records) : records;   // 同公司合并
+    pushToServer();
+  }
+
+  // 状态列表：内置 + 文件内嵌 + 浏览器本地，三方并集（key 去重，本地优先）
+  const mergedStatuses = new Map();
+  DEFAULT_STATUSES.forEach(s => mergedStatuses.set(s.key, s));
+  (EMBEDDED.statuses || []).forEach(s => { if (!mergedStatuses.has(s.key)) mergedStatuses.set(s.key, s); });
+  (localStatuses || []).forEach(s => mergedStatuses.set(s.key, s));
+  // ★ 垃圾状态回收：文件更新后，浏览器残留的 auto 状态若文件已删除、且无任何卡片引用 → 清掉
+  // （只动 auto 状态，内置状态和用户自建状态永不回收）
+  if (_fileIsNewer) {
+    const _fileStatusKeys = new Set((EMBEDDED.statuses || []).map(s => s.key));
+    const _usedStatusKeys = new Set(records.map(r => r.status));
+    mergedStatuses.forEach((s, k) => {
+      if (s && s.auto && !s.builtIn && !_fileStatusKeys.has(k) && !_usedStatusKeys.has(k)) {
+        mergedStatuses.delete(k);
+      }
+    });
+  }
+  // ★ 状态按"名字"去重（同一名字只留一条，避免重复堆积）
+  // 旧状态名 → 现在的名字（历史遗留一次性归并，避免旧名字又堆回来）
+  const _RENAME = {
+    '流程中': '简历筛选中',
+    '已拒绝': '已挂',
+    '拒信': '已挂',
+    'ai面试完成': 'AI面试完成',
+  };
+  const _byLabel = {};
+  [...mergedStatuses.values()].forEach(s => {
+    const _old = (s.label || "").trim();
+    if (_RENAME[_old]) s = Object.assign({}, s, { label: _RENAME[_old] });
+    const lb = (s.label || "").trim().toLowerCase();   // 忽略大小写（AI面试完成 = ai面试完成）
+    if (!lb) return;
+    if (!_byLabel[lb]) _byLabel[lb] = s;
+    else if (s.builtIn && !_byLabel[lb].builtIn) _byLabel[lb] = s;   // 优先保留内置的
+  });
+  // 按"投递流程"排序（未投递 → 已投递 → 初筛 → 测评 → 笔试 → AI面试 → 面试 → 流程中 → Offer/已挂）
+  const _ORDER = ['undelivered','applied','in_progress','passed_first','assess','assess_done','test','test_done',
+                  'aiiv','aiiv_done','interview','interview_done','offer','talent','rejected'];
+  const _all = Object.values(_byLabel);
+  statuses = _ORDER.map(k => _all.find(s => s.key === k)).filter(Boolean)
+    .concat(_all.filter(s => _ORDER.indexOf(s.key) < 0));
+  // 发布版：加载时不再写回文件——只有用户主动增/删/改时才保存，
+  // 防止浏览器里残留的旧数据在每次打开时又存回模板文件
+
+  // 岗位历史 = 手动输入记忆 + 现有全部记录里的岗位（去重）
+  const jobsFromRecords = records.map(r => (r.job || '').trim()).filter(Boolean);
+  jobHistory = [...new Set([...localJobs, ...jobsFromRecords])];
+
+  // （发布版：加载时不自动保存，避免回写；合并结果仅用于本次展示）
+}
+function nowStamp() {
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+}
+/* 老板在页面手改状态时打标：记改动时间 + 来源=manual（防止被邮箱/巡检自动覆盖） */
+function markManual(r) { if (!r) return; r.statusAt = nowStamp(); r.statusBy = 'manual'; }
+
+/* 右下角轻提示（不弹窗、不挡路，2 秒自动消失） */
+function toast(msg) {
+  try {
+    var d = document.createElement('div');
+    d.textContent = msg;
+    d.style.cssText = 'position:fixed;left:50%;bottom:38px;transform:translateX(-50%);background:#2b2620;'
+      + 'color:#f7f2e7;padding:10px 18px;border-radius:8px;font-size:13.5px;z-index:9999;'
+      + 'box-shadow:0 4px 16px rgba(0,0,0,.25);opacity:0;transition:opacity .2s';
+    document.body.appendChild(d);
+    requestAnimationFrame(function(){ d.style.opacity = '1'; });
+    setTimeout(function(){ d.style.opacity = '0'; setTimeout(function(){ if (d.parentNode) d.parentNode.removeChild(d); }, 250); }, 2600);
+  } catch (e) {}
+}
+
+function saveData() {
+  localStorage.setItem(RECORDS_KEY, JSON.stringify(records));
+  pushToServer();  // 写回 html 文件
+}
+function saveStatuses() {
+  localStorage.setItem(STATUSES_KEY, JSON.stringify(statuses));
+  pushToServer();
+}
+function saveJobs() {
+  localStorage.setItem(JOBS_KEY, JSON.stringify(jobHistory));
+  pushToServer();
+}
+function pushToServer() {
+  // file:// 双击打开时也写回 localhost 服务
+  const url = location.protocol === 'file:' ? 'http://127.0.0.1:8768/api/save' : '/api/save';
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ records, statuses })
+  }).then(r => {
+    if (!r.ok) console.warn('[保存到文件失败] HTTP ' + r.status + ' —— 改动只存在浏览器里');
+  }).catch(e => {
+    console.warn('[保存到文件失败] 连不上本地服务（改动只存在浏览器里，删除已用墓碑记下，不会再复活）', e);
+  });
+}
+
+function getStatus(key) {
+  return statuses.find(s => s.key === key) || statuses.find(s => s.key === 'applied');
+}
+
+function daysUntil(dateStr) {
+  if (!dateStr) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const due = new Date(dateStr + 'T00:00:00');
+  return Math.round((due - today) / 86400000);
+}
+
+function renderReminderBanner() {
+  const urgent = [], soon = [];
+  const _hide = (typeof remindHidden === "function") ? remindHidden() : [];
+  records.forEach(r => {
+    if (!r.dueDate || r.status === 'offer' || r.status === 'rejected') return;
+    if (_hide.indexOf(remindKey(r)) > -1) return;      // 已"不再提醒"的跳过
+    const d = daysUntil(r.dueDate);
+    const rd = parseInt(r.remindDays) || 1;
+    if (d < 0) urgent.push({ r, d });
+    else if (d <= rd) soon.push({ r, d });
+  });
+  const banner = document.getElementById('reminderBanner');
+  if (!urgent.length && !soon.length) { banner.innerHTML = ''; return; }
+  let html = '<b>待办提醒</b>';
+  urgent.forEach(({r,d}) => {
+    html += `<div class="item">已过期 <b>${esc(r.company)}</b> ${esc(r.job||'')} — ${Math.abs(d)}天（截止 ${esc(r.dueDate)}）<span class="remind-x" title="处理完了？点这里不再提醒" onclick="remindHide(\'${remindKey(r)}\')">×</span></div>`;
+  });
+  soon.forEach(({r,d}) => {
+    html += `<div class="item">${d === 0 ? '今天截止' : '还剩'+d+'天'} <b>${esc(r.company)}</b> ${esc(r.job||'')}（${esc(r.dueDate)}${r.dueTime?(' '+esc(r.dueTime)):''}）<span class="remind-x" title="处理完了？点这里不再提醒" onclick="remindHide(\'${remindKey(r)}\')">×</span></div>`;
+  });
+  banner.innerHTML = html;
+  banner.className = 'reminder-banner';
+}
+
+function renderFilters() {
+  const toolbar = document.getElementById('toolbar');
+  toolbar.innerHTML = '';
+  const mkBtn = (key, label) => {
+    const b = document.createElement('button');
+    b.className = 'filter-btn' + (currentFilter === key ? ' active' : '');
+    b.dataset.status = key;
+    b.textContent = label;
+    b.onclick = () => {
+      toolbar.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      currentFilter = key;
+      renderCards();
+    };
+    toolbar.appendChild(b);
+  };
+  mkBtn('all', '全部');
+  statuses.forEach(s => mkBtn(s.key, s.label));
+}
+
+function renderStats() {
+  const counts = { total: records.length };
+  statuses.forEach(s => counts[s.key] = 0);
+  records.forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++; });
+  let html = `<div class="stat-card"><div class="num" style="color:#1a1a2e">${counts.total}</div><div class="label">总数</div></div>`;
+  statuses.forEach(s => {
+    html += `<div class="stat-card"><div class="num" style="color:${s.color}">${counts[s.key]}</div><div class="label">${s.label}</div></div>`;
+  });
+  document.getElementById('stats').innerHTML = html;
+}
+
+function renderCard(r) {
+  const s = getStatus(r.status);
+  const d = daysUntil(r.dueDate);
+  const rd = parseInt(r.remindDays) || 1;
+  let dueHtml = '';
+  if (r.dueDate && r.status !== 'offer' && r.status !== 'rejected') {
+    if (d < 0) dueHtml = `<span class="due-badge due-overdue">过期${Math.abs(d)}天</span>`;
+    else if (d <= rd) dueHtml = `<span class="due-badge due-soon">${d===0?'今天':''+d+'天'}</span>`;
+    else dueHtml = `<span class="due-badge due-normal">${r.dueDate.slice(5)}</span>`;
+  } else if (r.dueDate) {
+    dueHtml = `<span class="due-badge due-normal">${r.dueDate.slice(5)}</span>`;
+  }
+
+  const linkBtn = r.url
+    ? `<a class="quick-link-btn" href="${esc(r.url)}" target="_blank">官网直达</a>`
+    : `<span class="quick-link-btn disabled">官网直达</span>`;
+
+  const statusOptions = statuses.map(st =>
+    `<option value="${st.key}" ${st.key===r.status?'selected':''}>${esc(st.label)}</option>`
+  ).join('');
+
+  return `<div class="card" style="border-left-color:${s.color}">
+    <div class="card-top">
+      <div class="card-company">${esc(r.company)}</div>
+      ${r.location ? `<span class="card-location">${esc(r.location)}</span>` : ''}
+    </div>
+    ${r.job ? `<div class="card-job">${esc(r.job)}</div>` : ''}
+    <div class="card-meta">
+      <span>日期：<b>${esc(r.date||'-')}</b></span>
+      <span>方式：<b>${esc(r.channel||'官网网申')}</b></span>
+      ${r.receiveDate ? `<span>收到：${esc(r.receiveDate)}</span>` : ''}
+    </div>
+    ${r.note ? `<div class="card-note">${esc(r.note)}</div>` : ''}
+    <div class="card-bottom">
+      ${linkBtn}
+      <select onchange="quickStatus(${r.id}, this.value)">${statusOptions}</select>
+      ${dueHtml}
+      <div class="card-actions">
+        <button class="icon-btn" onclick="editRecord(${r.id})" title="编辑">编辑</button>
+        <button class="icon-btn del" onclick="deleteRecord(${r.id})" title="删除">删除</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCards() {
+  let filtered = records;
+  if (currentFilter !== 'all') filtered = filtered.filter(r => r.status === currentFilter);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(r =>
+      r.company.toLowerCase().includes(q) || (r.job||'').toLowerCase().includes(q)
+    );
+  }
+  // 日期倒序；同一天的，后加的排最前面（id 大的是新加的）
+  filtered.sort((a,b) => {
+    const d = (b.date||'').localeCompare(a.date||'');
+    if (d !== 0) return d;
+    return (Number(b.id) || 0) - (Number(a.id) || 0);
+  });
+
+  const container = document.getElementById('cardContainer');
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    document.getElementById('emptyState').style.display = 'block';
+    return;
+  }
+  document.getElementById('emptyState').style.display = 'none';
+
+  // "全部"视图下按状态分组
+  if (currentFilter === 'all' && !searchQuery) {
+    let html = '';
+    // ★ 最上面先放"最近新增"（今天加的），不用往下滑就能看见
+    const _today = new Date();
+    const _todayKey = _today.getFullYear() + '-' + String(_today.getMonth() + 1).padStart(2, '0') + '-' + String(_today.getDate()).padStart(2, '0');
+    const _recent = filtered.filter(r => String(r.date || '').slice(0, 10) === _todayKey);
+    const _recentIds = new Set(_recent.map(r => r.id));
+    if (_recent.length) {
+      html += `<div class="group-section" style="border-left:3px solid var(--red);padding-left:10px">
+        <div class="group-title">最近新增 · 今天 <span class="count">${_recent.length} 家</span></div>
+        <div class="card-list">${_recent.map(renderCard).join('')}</div>
+      </div>`;
+    }
+    statuses.forEach(s => {
+      const groupItems = filtered.filter(r => r.status === s.key && !_recentIds.has(r.id));
+      if (groupItems.length === 0) return;
+      html += `<div class="group-section">
+        <div class="group-title">
+          <span class="group-dot" style="background:${s.color}">${groupItems.length}</span>
+          ${esc(s.label)} <span class="count">${groupItems.length} 家</span>
+        </div>
+        <div class="card-list">${groupItems.map(renderCard).join('')}</div>
+      </div>`;
+    });
+    container.innerHTML = html;
+  } else {
+    container.innerHTML = `<div class="card-list">${filtered.map(renderCard).join('')}</div>`;
+  }
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function quickStatus(id, newStatus) {
+  const r = records.find(x => x.id === id);
+  if (r) { if (r.status !== newStatus) markManual(r); r.status = newStatus; saveData(); renderAll(); }
+}
+
+function refreshJobList() {
+  document.getElementById('jobList').innerHTML =
+    [...new Set(jobHistory)].sort().map(j => `<option value="${esc(j)}">`).join('');
+}
+
+function openModal(id) {
+  editingId = id || null;
+  document.getElementById('modalTitle').textContent = id ? '编辑记录' : '新增投递记录';
+  refreshStatusOptions('applied');
+  refreshJobList();
+  if (id) {
+    const r = records.find(x => x.id === id);
+    if (r) {
+      document.getElementById('fCompany').value = r.company || '';
+      document.getElementById('fJob').value = r.job || '';
+      document.getElementById('fLocation').value = r.location || '';
+      document.getElementById('fChannel').value = r.channel || '官网网申';
+      document.getElementById('fDate').value = r.date || '';
+      document.getElementById('fStatus').value = r.status || 'applied';
+      document.getElementById('fUrl').value = r.url || '';
+      document.getElementById('fReceiveDate').value = r.receiveDate || '';
+      document.getElementById('fDueDate').value = r.dueDate || '';
+  document.getElementById('fDueTime').value = r.dueTime || '';
+      document.getElementById('fRemindDays').value = r.remindDays != null ? r.remindDays : 1;
+      document.getElementById('fNote').value = r.note || '';
+    }
+  } else {
+    document.getElementById('fCompany').value = '';
+    document.getElementById('fJob').value = '';
+    document.getElementById('fLocation').value = '';
+    document.getElementById('fChannel').value = '官网网申';
+    document.getElementById('fDate').value = new Date().toISOString().slice(0,10);
+    document.getElementById('fStatus').value = 'applied';
+    document.getElementById('fUrl').value = '';
+    document.getElementById('fReceiveDate').value = '';
+    document.getElementById('fDueDate').value = '';
+  document.getElementById('fDueTime').value = '';
+    document.getElementById('fRemindDays').value = 1;
+    document.getElementById('fNote').value = '';
+  }
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+function saveRecord() {
+  const data = {
+    company: document.getElementById('fCompany').value.trim(),
+    job: document.getElementById('fJob').value.trim(),
+    location: document.getElementById('fLocation').value.trim(),
+    channel: document.getElementById('fChannel').value,
+    date: document.getElementById('fDate').value,
+    status: document.getElementById('fStatus').value,
+    url: document.getElementById('fUrl').value.trim(),
+    receiveDate: document.getElementById('fReceiveDate').value,
+    dueDate: document.getElementById('fDueDate').value,
+    dueTime: document.getElementById('fDueTime').value,
+    remindDays: parseInt(document.getElementById('fRemindDays').value) || 1,
+    note: document.getElementById('fNote').value.trim()
+  };
+  if (!data.company) { alert('请填写公司名称'); return; }
+  if (data.job && !jobHistory.includes(data.job)) {
+    jobHistory.push(data.job);
+    saveJobs();
+  }
+  if (editingId) {
+    const idx = records.findIndex(x => x.id === editingId);
+    if (idx >= 0) {
+      const oldStatus = records[idx].status;
+      records[idx] = { ...records[idx], ...data };
+      if (oldStatus !== data.status) markManual(records[idx]);   // 手动改状态 → 打标
+    }
+  } else {
+    records.push({ id: Date.now(), ...data, statusAt: nowStamp(), statusBy: 'manual' });
+  }
+  saveData(); renderAll(); closeModal();
+}
+function editRecord(id) { openModal(id); }
+function deleteRecord(id) {
+  if (!confirm('确定删除这条记录？')) return;
+  markDeleted(id);                       // 记墓碑：以后不再复活
+  records = records.filter(x => x.id !== id);
+  saveData(); renderAll();
+}
+
+function refreshStatusOptions(selectedKey) {
+  const sel = document.getElementById('fStatus');
+  sel.innerHTML = statuses.map(s => `<option value="${s.key}">${s.label}</option>`).join('');
+  if (selectedKey) sel.value = selectedKey;
+}
+
+function openStatusModal() {
+  renderStatusList();
+  document.getElementById('statusModalOverlay').classList.add('show');
+}
+function closeStatusModal() { document.getElementById('statusModalOverlay').classList.remove('show'); }
+function renderStatusList() {
+  document.getElementById('statusList').innerHTML = statuses.map(s => {
+    const usedCount = records.filter(r => r.status === s.key).length;
+    const delBtn = s.builtIn
+      ? '<span class="built-in-tag">默认</span>'
+      : `<button class="btn btn-danger btn-sm" onclick="deleteStatus('${s.key}')">删除</button>`;
+    return `<div class="status-item"><div class="left">
+      <span class="status-dot" style="background:${s.color}"></span>
+      <span class="label-text">${esc(s.label)}</span>
+      <span class="built-in-tag">${usedCount}条</span>${delBtn}
+    </div></div>`;
+  }).join('');
+}
+function addStatus() {
+  const input = document.getElementById('newStatusName');
+  const name = input.value.trim();
+  if (!name) return;
+  if (statuses.some(s => s.label === name)) { alert('该状态已存在'); return; }
+  const usedColors = statuses.map(s => s.color);
+  const color = PALETTE.find(c => !usedColors.includes(c)) || PALETTE[statuses.length % PALETTE.length];
+  statuses.push({ key: 'custom_' + Date.now(), label: name, color, builtIn: false });
+  saveStatuses(); input.value = '';
+  renderStatusList(); renderAll();
+}
+function deleteStatus(key) {
+  const s = statuses.find(x => x.key === key);
+  const usedCount = records.filter(r => r.status === key).length;
+  if (usedCount > 0) {
+    if (!confirm(`有 ${usedCount} 条记录在用「${s.label}」，删除后变回「已投递」，确定？`)) return;
+    records.forEach(r => { if (r.status === key) { r.status = 'applied'; markManual(r); } });
+    saveData();
+  } else {
+    if (!confirm(`确定删除状态「${s.label}」？`)) return;
+  }
+  statuses = statuses.filter(x => x.key !== key);
+  saveStatuses(); renderStatusList(); renderAll();
+}
+
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(records, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = '秋招投递记录.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+function importJSON(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (Array.isArray(data)) { records = data; saveData(); renderAll(); alert('导入成功！'); }
+    } catch(err) { alert('文件格式错误'); }
+  };
+  reader.readAsText(file);
+}
+
+/* ═══ 日程日历：从投递记录自动生成，不用手填 ═══ */
+var CAL_DEL_KEY='cal_deleted_v1';
+var calCur=new Date(); calCur.setDate(1);
+function calDeleted(){ try{ return JSON.parse(localStorage.getItem(CAL_DEL_KEY)||"[]"); }catch(e){ return []; } }
+function calSaveDeleted(a){ try{ localStorage.setItem(CAL_DEL_KEY, JSON.stringify(a)); }catch(e){} }
+
+/** 这条投递记录该不该上日历：只认「要去赴的约」，投递/结束/完成类一律不进 */
+function calWorthy(st){
+  var s=String(st||'').toLowerCase();
+  if(/applied|已投递|未投递|offer|rejected|已挂|已拒绝|talent|人才库|流程中|测评完成|ai面试完成|已拒绝|完成/.test(s)) return false;
+  if(/test|笔试|测评|assess|interview|面试|终面|aiiv|ai面试|初筛/.test(s)) return true;
+  return false;   /* 认不出的状态一律不进，宁可少，不瞎加 */
+}
+/** 从投递记录生成日历条目（这就是"全自动"的地方） */
+function calKind(st){
+  st=String(st||'');
+  var s=st.toLowerCase();
+  try{ var o=getStatus(st); if(o&&o.label) return o.label; }catch(e){}
+  if(/aiiv|ai面试|智能面试/.test(s)) return 'AI面试';
+  if(/终面|interview|面试/.test(s)) return '面试';
+  if(/test|笔试/.test(s)) return '笔试';
+  if(/assess|测评|初评/.test(s)) return '测评';
+  return '日程';
+}
+function buildCalEvents(){
+  var del=calDeleted(), out=[];
+  (typeof records!=='undefined'?records:[]).forEach(function(r){
+    if(!r) return;
+    if(!calWorthy(r.status)) return;
+    /* 日期：优先"截止/赴约日期"（dueDate），没有就用"投递日期" */
+    var dt=(r.dueDate&&String(r.dueDate).trim())||(r.date&&String(r.date).trim())||'';
+    if(!dt) return;
+    var key='rec_'+(r.id!=null?r.id:((r.company||'')+'|'+(r.job||'')));
+    if(del.indexOf(key)>-1) return;
+    var tm=(r.dueTime&&String(r.dueTime).trim())||'';
+    var kind=calKind(r.status);
+    var name=(r.company||'')+(r.job?(' · '+r.job):'');
+    out.push({key:key, d:String(dt).slice(0,10), tm:tm, name:name, kind:kind,
+              t:'【'+kind+'】'+name+(tm?(' '+tm):''), st:r.status, raw:r,
+              fromDue:!!(r.dueDate&&String(r.dueDate).trim())});
+  });
+  return out;
+}
+function calColor(st){
+  var s=String(st||'').toLowerCase();
+  if(/aiiv|ai面试|智能面试/.test(s)) return '#c2185b';   /* AI面试：玫红 */
+  if(/终面|interview|面试/.test(s)) return '#7a4fb5';    /* 面试：紫 */
+  if(/test|笔试/.test(s)) return '#e07b1a';              /* 笔试：橙 */
+  if(/assess|测评|初评/.test(s)) return '#0f8a7f';      /* 测评：青 */
+  return '#6d4c7d';
+}
+/** 解析事件当天的分钟数（0-1439），用于排序：上午在前下午在后；解析不出来返回 9999 排最后 */
+function calSortMin(e){
+  var s=String(e.tm||'');
+  var m=s.match(/(\d{1,2})\s*[:：点]\s*(\d{1,2})?/);
+  if(m && +m[1]<=23){ return (+m[1])*60 + (m[2]?+m[2]:0); }
+  var note=String((e.raw&&e.raw.note)||'');
+  var nm=note.match(/(?:面试时间|截止时间|测评时间|笔试时间)[：:]\s*\d{4}[-\/]\d{1,2}[-\/]\d{1,2}\s*(\d{1,2})\s*[:：点]\s*(\d{1,2})?/);
+  if(nm && +nm[1]<=23){ return (+nm[1])*60 + (nm[2]?+nm[2]:0); }
+  /* 中文"上午/下午 X 点" */
+  var cm=note.match(/(上午|下午|早上|晚上)?\s*(\d{1,2})\s*点(半)?/);
+  if(cm && +cm[2]<=12){
+    var h=+cm[2]; if(cm[1]==='下午'||cm[1]==='晚上') h+=12; if(h===12&&cm[1]==='上午') h=0;
+    return h*60 + (cm[3]?30:0);
+  }
+  return 9999;
+}
+/** 格子上显示的短标签：公司名 + 时间（有具体时间才显示） */
+function calShortLabel(e){
+  var co=String(e.name||'').split(' · ')[0] || String(e.name||'');
+  var min=calSortMin(e);
+  if(min<9999){
+    var h=Math.floor(min/60), mm=min%60;
+    return co+' '+String(h).padStart(2,'0')+':'+String(mm).padStart(2,'0');
+  }
+  return co;
+}
+/** 悬浮详情：公司/岗位/类型/截止时间/面试时间，多行 */
+function calTip(e){
+  var r=e.raw||{}, note=String(r.note||''), L=[];
+  L.push('公司：'+(r.company||'未知'));
+  if(r.job) L.push('岗位：'+r.job);
+  L.push('类型：'+e.kind);
+  var dm=note.match(/截止时间：([^；;　\n]+)/);
+  var im=note.match(/面试时间：([^；;　\n]+)/);
+  if(dm) L.push('截止时间：'+dm[1]);
+  if(im) L.push('面试时间：'+im[1]);
+  if(!dm && !im) L.push((e.fromDue?'截止日期':'日期')+'：'+e.d+(e.tm?(' '+e.tm):'')+(e.tm?'':'（全天）'));
+  if(/待人工复核/.test(note)) L.push('⚠️ 信息不足，待人工复核');
+  L.push('（点一下可从日历删掉）');
+  return L.join('\n');
+}
+function toggleCal(){
+  var p=document.getElementById('calPanel'); if(!p)return;
+  p.classList.toggle('open');
+  if(p.classList.contains('open')) drawCal();
+}
+function shiftCal(n){ calCur.setMonth(calCur.getMonth()+n); drawCal(); }
+function drawCal(){
+  var g=document.getElementById('calGrid'); if(!g) return;
+  var evs=buildCalEvents();
+  var y=calCur.getFullYear(), mo=calCur.getMonth();
+  document.getElementById('calT').textContent=y+' 年 '+(mo+1)+' 月';
+  var first=new Date(y,mo,1), st=(first.getDay()+6)%7, days=new Date(y,mo+1,0).getDate(), prev=new Date(y,mo,0).getDate();
+  var now=new Date(), todayKey=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  var html=['一','二','三','四','五','六','日'].map(function(d){return '<div class="cal-dow">'+d+'</div>';}).join('');
+  for(var i=0;i<st;i++) html+='<div class="cal-day out"><span class="dn">'+(prev-st+1+i)+'</span></div>';
+  for(var d=1;d<=days;d++){
+    var key=y+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var day=evs.filter(function(e){ return e.d===key; })
+               .sort(function(a,b){ return calSortMin(a)-calSortMin(b); });
+    html+='<div class="cal-day'+(key===todayKey?' today':'')+'"><span class="dn">'+d+'</span>';
+    day.forEach(function(e, idx){
+      if(idx<4){
+        html+='<div class="cal-ev" style="background:'+calColor(e.st)+'" data-key="'+e.key+'" onclick="calDel(\''+e.key+'\')">'+esc(calShortLabel(e))+'</div>';
+      }
+    });
+    if(day.length>4){
+      html+='<div class="cal-ev more" data-more="'+day.slice(4).map(function(e){return e.key;}).join(',')+'">+'+(day.length-4)+'</div>';
+    }
+    html+='</div>';
+  }
+  var tl=(7-((st+days)%7))%7;
+  for(var k=1;k<=tl;k++) html+='<div class="cal-day out"><span class="dn">'+k+'</span></div>';
+  g.innerHTML=html;
+  /* 即将到来 */
+  var t0=new Date(); t0.setHours(0,0,0,0);
+  var up=evs.map(function(e){ return {e:e, d:Math.round((new Date(e.d+'T00:00:00')-t0)/86400000)}; })
+    .filter(function(x){ return x.d>=0; }).sort(function(a,b){ return a.d-b.d; });
+  document.getElementById('calUp').innerHTML = up.length
+    ? '<div style="font-size:12.5px;font-weight:700;margin:4px 0 6px">即将到来（'+up.length+' 项）</div>'
+      + up.map(function(x){
+          var c=x.d<=1?'#b03a2e':(x.d<=3?'#c8811a':'#9a9a9a');
+          return '<div class="cal-up-row" title="'+esc(calTip(x.e)).replace(/\n/g,'&#10;')+'"><span class="cal-up-d" style="background:'+c+'">'+(x.d===0?'今天':x.d+' 天后')+'</span>'
+            + '<span style="color:'+calColor(x.e.st)+';font-weight:700;white-space:nowrap">'+esc(x.e.kind)+'</span>'
+            + '<span>'+esc(x.e.name)+'</span><span style="color:#9a9a9a;font-size:12px">'+x.e.d+(x.e.tm?(' '+x.e.tm):'')+'</span>'
+            + '<span class="cal-up-del" onclick="calDel(\''+x.e.key+'\')">删除</span></div>';
+        }).join('')
+    : '<div style="color:#9a9a9a;font-size:12.5px;padding:6px 0">这里会自动列出最近的笔试 / 面试。现在没有，说明台账里还没有「笔试/测评/面试/AI面试」且填了截止日期的记录。</div>';
+}
+/** 从日历上删掉一条（投递记录不动，只是不再显示） */
+function calDel(key){
+  var hit=buildCalEvents().filter(function(e){ return e.key===key; })[0];
+  if(!hit) return;
+  if(!confirm('从日历删掉「'+hit.t+'」？\n\n（投递记录不会动，只是它不再出现在日历上）')) return;
+  var del=calDeleted(); if(del.indexOf(key)<0) del.push(key); calSaveDeleted(del);
+  drawCal();
+}
+/* 悬浮详情浮层：圆点 hover 时弹出，复用 calTip 的文案 */
+(function(){
+  var grid=document.getElementById('calGrid'), pop=document.getElementById('calPop');
+  if(!grid||!pop) return;
+  function showPop(dot, x, y){
+    var evs=buildCalEvents();
+    if(dot.classList.contains('more')){
+      var keys=(dot.getAttribute('data-more')||'').split(',').filter(Boolean);
+      var list=evs.filter(function(e){ return keys.indexOf(e.key)>-1; });
+      pop.innerHTML='<div class="pp-kind" style="background:#9a9a9a">更多日程</div>'
+        +list.map(function(e){
+          return '<div class="pp-row"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+calColor(e.st)+';margin-right:6px"></span>'
+            +esc(e.kind)+' '+esc(e.name)+(e.tm?(' '+esc(e.tm)):'')+'</div>';
+        }).join('')
+        +'<div class="pp-hint">点彩色圆点可删除对应日程</div>';
+    } else {
+      var key=dot.getAttribute('data-key');
+      var hit=evs.filter(function(e){ return e.key===key; })[0];
+      if(!hit) return;
+      var lines=calTip(hit).split('\n');
+      var html='<div class="pp-kind" style="background:'+calColor(hit.st)+'">'+esc(hit.kind)+'</div>';
+      lines.forEach(function(L){
+        if(/^（点一下/.test(L)) html+='<div class="pp-hint">'+esc(L)+'</div>';
+        else html+='<div class="pp-row">'+esc(L)+'</div>';
+      });
+      pop.innerHTML=html;
+    }
+    pop.style.display='block';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var left=x-pw/2; if(left<8) left=8; if(left+pw>window.innerWidth-8) left=window.innerWidth-8-pw;
+    var top=y-ph-10; if(top<8) top=y+12;
+    pop.style.left=left+'px'; pop.style.top=top+'px';
+  }
+  function hidePop(){ pop.style.display='none'; }
+  grid.addEventListener('mouseover', function(ev){
+    var dot=ev.target.closest?ev.target.closest('.cal-ev'):null;
+    if(!dot){ hidePop(); return; }
+    var r=dot.getBoundingClientRect();
+    showPop(dot, r.left+r.width/2, r.top);
+  });
+  grid.addEventListener('mouseout', function(ev){
+    if(ev.target.closest && ev.target.closest('.cal-ev')) hidePop();
+  });
+})();
+function renderAll() { renderFilters(); renderStats(); renderReminderBanner(); renderCards(); drawCal(); }
+
+loadData();
+checkSetup();
+renderAll();
+loadScanStatus();  // 加载上次扫描状态
+
+document.getElementById('search').addEventListener('input', e => { searchQuery = e.target.value; renderCards(); });
+document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.getElementById('statusModalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeStatusModal(); });
+document.getElementById('aiModalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeAiModal(); });
+
+// ===== AI 添加 =====
+function aiMsg(text, ok) {
+  const el = document.getElementById('aiMsg');
+  el.style.display = 'block';
+  el.style.background = ok ? '#e8f5e9' : '#fdecea';
+  el.style.color = ok ? '#2e7d32' : '#c62828';
+  el.textContent = text;
+}
+
+/* ===== 设置：邮箱 + AI 模型（写入 .env，只存本机） ===== */
+function setMsg(text, ok) {
+  const el = document.getElementById('setMsg');
+  el.style.display = text ? 'block' : 'none';
+  el.style.background = ok ? '#e8f5e9' : '#fdecea';
+  el.style.color = ok ? '#2e7d32' : '#c62828';
+  el.textContent = text;
+}
+/* 邮箱提供商预设：选谁就自动填收信服务器 + 授权码教程 */
+var _MAIL_PRESETS = {
+  gmail: { host: 'imap.gmail.com', pwdLabel: '应用专用密码（16 位，不是登录密码）', pwdPh: 'Google 账号设置里生成，已设置则留空',
+    help: '<b>Gmail：</b>先开启「两步验证」→ 打开 <a href="https://myaccount.google.com/apppasswords" target="_blank">Google 账号的应用专用密码页</a>（或按 <a href="https://support.google.com/accounts/answer/185833" target="_blank">官方说明</a>）→ 应用选「邮件」→ 生成 16 位密码，粘贴到上面的密码框。' },
+  qq: { host: 'imap.qq.com', pwdLabel: 'QQ 邮箱授权码（16 位）', pwdPh: 'QQ 邮箱设置里生成，已设置则留空',
+    help: '<b>QQ 邮箱：</b>电脑网页版登录 <a href="https://mail.qq.com" target="_blank">mail.qq.com</a> → 设置 → 账户 → 往下找到「IMAP/SMTP 服务」→ 开启（按提示发短信验证）→ 生成 16 位<b>授权码</b>（不是 QQ 密码），粘贴到上面。' },
+  '163': { host: 'imap.163.com', pwdLabel: '163 邮箱授权码（客户端授权密码）', pwdPh: '163 邮箱设置里生成，已设置则留空',
+    help: '<b>163 邮箱：</b>登录 <a href="https://mail.163.com" target="_blank">mail.163.com</a> → 设置 → POP3/SMTP/IMAP → 勾选「IMAP」并开启 → 扫码/短信验证 → 得到<b>客户端授权密码</b>（不是登录密码），粘贴到上面。' },
+  '126': { host: 'imap.126.com', pwdLabel: '126 邮箱授权码（客户端授权密码）', pwdPh: '126 邮箱设置里生成，已设置则留空',
+    help: '<b>126 邮箱：</b>登录 <a href="https://mail.126.com" target="_blank">mail.126.com</a> → 设置 → POP3/SMTP/IMAP → 开启「IMAP」→ 验证后得到<b>客户端授权密码</b>，粘贴到上面。' },
+  outlook: { host: 'outlook.office365.com', pwdLabel: 'Microsoft 应用密码', pwdPh: '微软账户安全设置里生成，已设置则留空',
+    help: '<b>Outlook / Hotmail：</b>需要先开启双重验证，然后在 <a href="https://account.microsoft.com/security" target="_blank">account.microsoft.com/security</a> → 高级安全选项 → 应用密码 → 生成。如果微软账户里看不到「应用密码」入口，也可以用「邮箱密码 + 双重验证」或改用 QQ/163 邮箱。' },
+  other: { host: '', pwdLabel: '客户端专用密码 / 授权码', pwdPh: '该邮箱服务商提供的客户端密码',
+    help: '<b>其他邮箱：</b>收信服务器填你的邮箱服务商提供的 IMAP 地址（一般走 SSL 993 端口），密码填该服务商的「客户端专用密码 / 授权码」（通常也要先在网页版设置里开启 IMAP 服务）。' }
+};
+function applyMailPreset(keepHost) {
+  const p = document.getElementById('setMailProvider').value;
+  const pre = _MAIL_PRESETS[p] || _MAIL_PRESETS.other;
+  if (!keepHost) document.getElementById('setImap').value = pre.host;
+  const lab = document.getElementById('setMailPwdLabel');
+  if (lab) lab.textContent = pre.pwdLabel;
+  const pwd = document.getElementById('setGmailPwd');
+  pwd.placeholder = pre.pwdPh;
+  const help = document.getElementById('setMailHelpBody');
+  if (help) help.innerHTML = pre.help;
+}
+function _inferMailProv(host) {
+  host = String(host || '').toLowerCase();
+  if (host.indexOf('qq.com') !== -1) return 'qq';
+  if (host.indexOf('163.com') !== -1) return '163';
+  if (host.indexOf('126.com') !== -1) return '126';
+  if (host.indexOf('office365.com') !== -1 || host.indexOf('outlook.com') !== -1 || host.indexOf('live.com') !== -1) return 'outlook';
+  if (host.indexOf('gmail.com') !== -1 || host.indexOf('google') !== -1) return 'gmail';
+  return 'other';
+}
+/* AI 提供商预设：选谁就自动填接口地址 + 列出可选模型 */
+var _MODEL_PRESETS = {
+  deepseek:     { base: 'https://api.deepseek.com', models: ['deepseek-chat', 'deepseek-reasoner'] },
+  openai:       { base: 'https://api.openai.com/v1', models: ['gpt-4o', 'gpt-4o-mini', 'gpt-4.1', 'gpt-4.1-mini', 'o3-mini'] },
+  moonshot:     { base: 'https://api.moonshot.cn/v1', models: ['moonshot-v1-8k', 'moonshot-v1-32k', 'moonshot-v1-128k', 'kimi-latest', 'kimi-k2-0711-preview'] },
+  qwen:         { base: 'https://dashscope.aliyuncs.com/compatible-mode/v1', models: ['qwen-plus', 'qwen-turbo', 'qwen-max', 'qwen-long', 'qwen3-max', 'qwen3-plus'] },
+  zhipu:        { base: 'https://open.bigmodel.cn/api/paas/v4', models: ['glm-4-plus', 'glm-4-air', 'glm-4-flash', 'glm-4-long'] },
+  volcengine:   { base: 'https://ark.cn-beijing.volces.com/api/v3', models: ['doubao-1.5-pro-32k-250115', 'doubao-1.5-lite-32k-250115', 'doubao-pro-32k', 'doubao-lite-32k'] },
+  siliconflow:  { base: 'https://api.siliconflow.cn/v1', models: ['deepseek-ai/DeepSeek-V3', 'deepseek-ai/DeepSeek-R1', 'Qwen/Qwen2.5-72B-Instruct', 'THUDM/glm-4-9b-chat'] },
+  ollama:       { base: 'http://localhost:11434/v1', models: ['llama3.1:8b', 'qwen2.5:7b', 'deepseek-r1:7b'] },
+  custom:       { base: '', models: [] }
+};
+function _inferModelProv(base) {
+  base = String(base || '').toLowerCase();
+  if (base.indexOf('deepseek') !== -1) return 'deepseek';
+  if (base.indexOf('openai.com') !== -1) return 'openai';
+  if (base.indexOf('moonshot') !== -1) return 'moonshot';
+  if (base.indexOf('dashscope') !== -1 || base.indexOf('aliyun') !== -1) return 'qwen';
+  if (base.indexOf('bigmodel') !== -1) return 'zhipu';
+  if (base.indexOf('volces') !== -1 || base.indexOf('ark.cn') !== -1) return 'volcengine';
+  if (base.indexOf('siliconflow') !== -1) return 'siliconflow';
+  if (base.indexOf('11434') !== -1 || base.indexOf('ollama') !== -1) return 'ollama';
+  return 'custom';
+}
+function applyProviderPreset(keepModel) {
+  const p = document.getElementById('setProvider').value;
+  const pre = _MODEL_PRESETS[p] || _MODEL_PRESETS.custom;
+  document.getElementById('setBaseUrl').value = pre.base;
+  const dl = document.getElementById('modelSuggestions');
+  if (dl) dl.innerHTML = pre.models.map(function (m) { return '<option value="' + m + '">'; }).join('');
+  if (!keepModel) document.getElementById('setModel').value = pre.models[0] || '';
+  const hint = document.getElementById('setKeyHint');
+  if (hint) hint.style.display = (p === 'ollama') ? 'block' : 'none';
+}
+function openSettings() {
+  document.getElementById('setMsg').style.display = 'none';
+  document.getElementById('setGmailPwd').value = '';
+  document.getElementById('setApiKey').value = '';
+  fetch(LOCAL_API + '/api/settings').then(r => r.json()).then(d => {
+    if (d && d.ok) {
+      document.getElementById('setGmail').value = d.gmail_email || '';
+      const host = d.imap_host || '';
+      let mp = d.gmail_provider || _inferMailProv(host);
+      document.getElementById('setMailProvider').value = mp;
+      applyMailPreset(true);
+      document.getElementById('setImap').value = host || ((_MAIL_PRESETS[mp] || {}).host || '');
+      let mProv = d.model_provider || _inferModelProv(d.model_base_url);
+      document.getElementById('setProvider').value = mProv;
+      applyProviderPreset(true);
+      if (d.model_base_url) document.getElementById('setBaseUrl').value = d.model_base_url;
+      if (d.model_name) document.getElementById('setModel').value = d.model_name;
+    }
+  }).catch(() => {});
+  document.getElementById('settingsOverlay').classList.add('show');
+}
+function closeSettings() { document.getElementById('settingsOverlay').classList.remove('show'); }
+function saveSettings() {
+  const body = {
+    gmail_email: document.getElementById('setGmail').value.trim(),
+    gmail_app_password: document.getElementById('setGmailPwd').value,
+    gmail_provider: document.getElementById('setMailProvider').value,
+    imap_host: document.getElementById('setImap').value.trim(),
+    model_api_key: document.getElementById('setApiKey').value,
+    model_provider: document.getElementById('setProvider').value,
+    model_base_url: document.getElementById('setBaseUrl').value.trim(),
+    model_name: document.getElementById('setModel').value.trim(),
+  };
+  setMsg('保存中…', true);
+  fetch(LOCAL_API + '/api/settings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  }).then(r => r.json()).then(d => {
+    if (d && d.ok) {
+      document.getElementById('setGmailPwd').value = '';
+      document.getElementById('setApiKey').value = '';
+      setMsg('已保存：邮箱' + (d.gmail_configured ? '已配置' : '未配置') + '，AI 模型' + (d.model_key_configured ? '已配置' : '未配置') + '，可直接开始使用', true);
+      checkSetup();
+    } else {
+      setMsg('保存失败：' + ((d && d.error) || '未知错误'), false);
+    }
+  }).catch(e => { setMsg('保存失败：' + e, false); });
+}
+function checkSetup() {
+  fetch(LOCAL_API + '/api/settings').then(r => r.json()).then(d => {
+    const b = document.getElementById('setupBanner');
+    if (!b || !d || !d.ok) return;
+    const parts = [];
+    if (!d.gmail_configured) parts.push('邮箱');
+    if (!d.model_key_configured) parts.push('AI 模型');
+    if (parts.length === 0) { b.style.display = 'none'; return; }
+    b.style.display = 'flex';
+    b.innerHTML = '<span>首次使用：点「设置」配置' + parts.join('和') + '后即可开始使用</span>'
+      + '<button class="btn btn-primary" style="background:#6b5b95" onclick="openSettings()">去设置</button>'
+      + '<span class="banner-x" onclick="this.parentElement.style.display=\'none\'" title="知道了">×</span>';
+  }).catch(() => {});
+}
+
+function openAiModal() {
+  refreshJobList();  // AI 弹窗也带岗位记忆下拉
+  document.getElementById('aiUrl').value = '';
+  document.getElementById('aiJob').value = '';
+  document.getElementById('aiReferral').value = '';
+  document.getElementById('aiMsg').style.display = 'none';
+  document.getElementById('aiModalOverlay').classList.add('show');
+  if (location.protocol === 'file:') {
+    aiMsg('你是双击打开的网页 —— 这样也能用，但需要本地小服务在跑：如果你已经双击过「启动追踪表.bat」，直接填网址点下面按钮就行；如果点了报「连不上」，就去双击运行那个 .bat。', true);
+  }
+}
+function closeAiModal() { document.getElementById('aiModalOverlay').classList.remove('show'); }
+
+/* ===== 报告通用：公司归一 / 采纳 / 冲突区 / 统计 ===== */
+var _SCAN_ITEMS = [], _SCAN_CONFLICTS = [], _PATROL_CONFLICTS = [];
+var _SCAN_TIME = '', _PATROL_TIME = '';
+var PATROL_TARGETS = [], PATROL_SAVED = [];
+function _k(s){ return String(s||'').replace(/\s/g,'').toLowerCase(); }
+
+/* 公司名归一（与后端 dashboard.norm_company 对齐）：先过别名表 → 去括号说明 → 循环去结尾后缀/行业词 */
+/* ⚠️ 别名表 COMPANY_ALIAS_JS 与后端 dashboard.py 的 COMPANY_ALIAS 是同一张，改一边要同步改另一边 */
+var COMPANY_ALIAS_JS = {
+  '深圳传音控股股份有限公司': '传音控股',
+  '小米集团': '小米',
+  '纽劢科技': '智驾新程',
+  '智驾新程（上海）智能科技有限公司': '智驾新程',
+  '合合信息': '上海合合信息科技股份有限公司',
+  '阅文集团': '上海阅文信息技术有限公司',
+  '掌上先机': '北京掌上先机网络科技有限公司（慧策旺店通）',
+  '碧橙数字': '杭州碧橙数字技术股份有限公司',
+  '蔚来NIO': '蔚来',
+  'NIO蔚来': '蔚来'
+};
+var NORM_TAIL_JS = ["股份有限公司","有限责任公司","有限公司","集团","控股","公司",
+  "信息技术","技术服务","电子商务","文化传媒","科技","网络","文化","传媒","软件","电子"];
+var FILLER_JS = NORM_TAIL_JS.concat([
+  "在线","技术","信息","服务","国际","中国","股份","责任","有限",
+  "北京","上海","深圳","广州","杭州","南京","成都","武汉","西安","苏州",
+  "天津","重庆","厦门","长沙","郑州","合肥","青岛","济南","大连","宁波",
+  "四川省","四川","广东省","广东","浙江省","浙江","江苏省","江苏",
+  "湖北省","湖北","湖南省","湖南","山东省","山东","福建省","福建",
+  "河南省","河南","河北省","河北","辽宁省","辽宁","陕西省","陕西",
+  "云南省","云南","贵州省","贵州","广西","江西省","江西","山西省","山西",
+  "黑龙江省","黑龙江","吉林省","吉林","甘肃省","甘肃","海南省","海南"]);
+function _stripTailsJS(n){
+  var ch = true;
+  while (ch && n) {
+    ch = false;
+    for (var i = 0; i < NORM_TAIL_JS.length; i++) {
+      var s = NORM_TAIL_JS[i];
+      if (n.length > s.length + 1 && n.slice(-s.length) === s) { n = n.slice(0, -s.length); ch = true; break; }
+    }
+  }
+  return n;
+}
+function normCompany(s){
+  s = String(s == null ? '' : s).trim();
+  s = COMPANY_ALIAS_JS[s] || s;              // ★ 先过别名表（纽劢科技 → 智驾新程 等）
+  s = s.replace(/[（(][^）)]*[）)]/g, '');
+  return _stripTailsJS(s).toLowerCase().replace(/\s/g, '');
+}
+function _allFillerJS(s){
+  s = s || '';
+  var ch = true;
+  while (ch && s) {
+    ch = false;
+    for (var i = 0; i < FILLER_JS.length; i++) {
+      var w = FILLER_JS[i];
+      if (s.indexOf(w) === 0) { s = s.slice(w.length); ch = true; break; }
+    }
+  }
+  return s === '';
+}
+function sameCompanyJS(a, b){
+  var na = normCompany(a), nb = normCompany(b);
+  if (!na || !nb) return false;
+  if (na === nb) return true;
+  var short = na.length <= nb.length ? na : nb, long_ = na.length <= nb.length ? nb : na;
+  if (short.length < 2) return false;
+  if (long_.indexOf(short) === 0) return _allFillerJS(long_.slice(short.length));
+  var idx = long_.indexOf(short);
+  if (idx >= 0) return _allFillerJS(long_.slice(0, idx)) && _allFillerJS(long_.slice(idx + short.length));
+  return false;
+}
+
+var _STATUS_RANK_JS = { 'undelivered': 0, 'applied': 10, 'passed_first': 30, 'assess': 40,
+  'assess_done': 42, 'test': 50, 'test_done': 52, 'aiiv': 55, 'aiiv_done': 56,
+  'interview': 60, 'interview_done': 62, 'in_progress': 20, 'talent': 85, 'rejected': 90, 'offer': 100 };
+function _rankJS(key){
+  if (_STATUS_RANK_JS[key] != null) return _STATUS_RANK_JS[key];
+  var s = statuses.find(function(x){ return x.key === key; });
+  return s && s.rank != null ? s.rank : 45;
+}
+
+/* 台账里找这条记录：公司归一（含前缀/包含+行业词规则）+ 岗位匹配 */
+function findRecord(company, job){
+  var co = normCompany(company);
+  if (!co) return null;
+  var jb = _k(job);
+  var pool = records.filter(function(r){ return normCompany(r.company) === co; });
+  if (!pool.length) pool = records.filter(function(r){ return sameCompanyJS(r.company, company); });
+  if (!pool.length) return null;
+  // ① 岗位完全相等
+  var hit = jb ? pool.find(function(r){ return _k(r.job) === jb; }) : null;
+  // ② 一方岗位为空
+  if (!hit) hit = pool.find(function(r){ return !jb || !_k(r.job); });
+  // ③ 同公司多条 → 优先状态更靠后的（"有状态"的）
+  if (!hit) hit = pool.slice().sort(function(a, b){ return _rankJS(b.status) - _rankJS(a.status); })[0];
+  return hit || null;
+}
+
+/* 短哈希（前端自动建状态用） */
+function _shortHash(s){
+  var h = 0; s = String(s || '');
+  for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(36);
+}
+/* label 在状态表里不存在时，就地新建一个 auto 状态（不拦截、不报错） */
+function ensureStatusByLabel(label){
+  var lk = _stFix(label);
+  if (!lk) return null;
+  var st = statuses.find(function(s){ return s.label === lk; });
+  if (st) return st;
+  var key = 'auto_' + _shortHash(lk);
+  if (!statuses.some(function(s){ return s.key === key; })) {
+    var pal = ['#8a8175','#7a8b99','#9a7b4f','#6d7f6b','#8d6e8d','#a06a5a'];
+    var used = statuses.map(function(s){ return s.color; });
+    var color = pal.find(function(c){ return used.indexOf(c) < 0; }) || '#8a8175';
+    statuses.push({ key: key, label: lk, color: color, builtIn: false, auto: true, rank: 45 });
+    try { saveStatuses(); } catch (e) {}
+    try { renderFilters(); } catch (e) {}      // 筛选栏立刻出现新状态
+  }
+  return statuses.find(function(s){ return s.key === key; }) || null;
+}
+function setStatusByName(company, job, label){
+  var st = ensureStatusByLabel(label);
+  var hit = findRecord(company, job);
+  if (!st || !hit) return false;
+  hit.status = st.key; markManual(hit);
+  return true;
+}
+
+/* ═══ 「不采纳」本地记忆（刷新不再弹同一份报告的同一冲突） ═══ */
+var DISMISS_KEYS = { scan: 'scan_dismissed', patrol: 'patrol_dismissed' };
+function dismissedList(kind){
+  try { return JSON.parse(localStorage.getItem(DISMISS_KEYS[kind]) || '[]'); } catch (e) { return []; }
+}
+function _dismissKey(repTime, company, job, incoming){
+  return repTime + '||' + normCompany(company) + '||' + String(job || '').trim() + '||' + String(incoming || '');
+}
+function dismissAdd(kind, repTime, company, job, incoming){
+  var a = dismissedList(kind), k = _dismissKey(repTime, company, job, incoming);
+  if (a.indexOf(k) < 0) a.push(k);
+  try { localStorage.setItem(DISMISS_KEYS[kind], JSON.stringify(a)); } catch (e) {}
+  return k;
+}
+function isDismissed(kind, repTime, company, job, incoming){
+  return dismissedList(kind).indexOf(_dismissKey(repTime, company, job, incoming)) > -1;
+}
+
+/* 采纳单条邮箱识别明细 */
+function adoptItem(kind, idx, btn){
+  var it = _SCAN_ITEMS[idx];
+  if (!it) return;
+  var label = it.final_status || it.status || '';
+  if (!findRecord(it.company, it.job)) { toast('台账里没找到：' + it.company); return; }
+  var st = ensureStatusByLabel(label);
+  if (!st) return;
+  setStatusByName(it.company, it.job, label);
+  saveData(); renderAll();
+  dismissAdd('scan', _SCAN_TIME, it.company, it.job, '__adopted__');   // 刷新不复活
+  var row = document.getElementById('it-scan-' + idx);
+  if (row && row.parentNode) row.parentNode.removeChild(row);
+  toast(it.company + ' 已采纳为「' + st.label + '」');
+}
+/* 采纳一条冲突 → 改台账并移除该行 */
+function adoptConflict(kind, idx, btn){
+  var c = (kind === 'patrol' ? _PATROL_CONFLICTS : _SCAN_CONFLICTS)[idx];
+  if (!c) return;
+  var label = c.incoming_label || c.incoming_status;
+  if (!findRecord(c.company, c.job)) { toast('台账里没找到：' + c.company); return; }
+  setStatusByName(c.company, c.job, label);
+  saveData(); renderAll();
+  _removeConflictRow(kind, idx, c, false);
+}
+/* 不采纳一条冲突 → 台账不动、该行移除、记本地忽略 */
+function dismissConflict(kind, idx, btn){
+  var c = (kind === 'patrol' ? _PATROL_CONFLICTS : _SCAN_CONFLICTS)[idx];
+  if (!c) return;
+  dismissAdd(kind, kind === 'patrol' ? _PATROL_TIME : _SCAN_TIME, c.company, c.job, c.incoming_status);
+  _removeConflictRow(kind, idx, c, true);
+}
+function _removeConflictRow(kind, idx, c, dismissed){
+  var row = document.getElementById('cf-' + kind + '-' + idx);
+  if (row && row.parentNode) row.parentNode.removeChild(row);
+  _afterConflictChange(kind);
+}
+function adoptAllConflicts(kind){
+  var arr = kind === 'patrol' ? _PATROL_CONFLICTS : _SCAN_CONFLICTS;
+  var n = 0;
+  arr.forEach(function(c, i){
+    if (setStatusByName(c.company, c.job, c.incoming_label || c.incoming_status)) n++;
+    var row = document.getElementById('cf-' + kind + '-' + i);
+    if (row && row.parentNode) row.parentNode.removeChild(row);
+  });
+  saveData(); renderAll();
+  toast('已采纳 ' + n + ' 条');
+  _afterConflictChange(kind);
+}
+function dismissAllConflicts(kind){
+  var arr = kind === 'patrol' ? _PATROL_CONFLICTS : _SCAN_CONFLICTS;
+  var t = kind === 'patrol' ? _PATROL_TIME : _SCAN_TIME;
+  arr.forEach(function(c, i){
+    dismissAdd(kind, t, c.company, c.job, c.incoming_status);
+    var row = document.getElementById('cf-' + kind + '-' + i);
+    if (row && row.parentNode) row.parentNode.removeChild(row);
+  });
+  _afterConflictChange(kind);
+}
+function _afterConflictChange(kind){
+  var box = document.getElementById('cfbox-' + kind);
+  var list = document.getElementById('cflist-' + kind);
+  if (!box) return;
+  if (!list || list.children.length === 0) {
+    box.className = 'rep-box';
+    box.innerHTML = '<div class="rep-t">冲突已全部处理完</div>';
+  }
+}
+/* 全部采纳（邮箱=识别明细+冲突；巡检=冲突） */
+function adoptAll(kind){
+  var n = 0;
+  if (kind === 'patrol') {
+    adoptAllConflicts('patrol');
+    return;
+  }
+  _SCAN_ITEMS.forEach(function(it, i){
+    var label = it.final_status || it.status || '';
+    if (findRecord(it.company, it.job) && setStatusByName(it.company, it.job, label)) {
+      n++; dismissAdd('scan', _SCAN_TIME, it.company, it.job, '__adopted__');
+      var row = document.getElementById('it-scan-' + i);
+      if (row && row.parentNode) row.parentNode.removeChild(row);
+    }
+  });
+  _SCAN_CONFLICTS.forEach(function(c, i){
+    if (setStatusByName(c.company, c.job, c.incoming_label || c.incoming_status)) n++;
+    var row = document.getElementById('cf-scan-' + i);
+    if (row && row.parentNode) row.parentNode.removeChild(row);
+  });
+  saveData(); renderAll();
+  toast('已采纳 ' + n + ' 条');
+  _afterConflictChange('scan');
+}
+function _statLine(r){
+  var a = [];
+  if (r.changed) a.push('本轮新变化 <b>' + r.changed + '</b> 条');
+  if (r.synced) a.push('已同步 <b>' + r.synced + '</b> 条');
+  if (r.added) a.push('新公司 <b>' + r.added + '</b> 条');
+  if (typeof r.sent_to_ai === 'number') a.push('AI 兜底 <b>' + r.sent_to_ai + '</b> 封');
+  if (r.merged_companies && r.merged_companies.length) a.push('合并重复公司 <b>' + r.merged_companies.length + '</b> 条');
+  if (r.new_statuses && r.new_statuses.length) a.push('自动新建状态 <b>' + r.new_statuses.length + '</b> 个');
+  if (r.conflicts && r.conflicts.length) a.push('<span class="rep-warn">冲突待确认 <b>' + r.conflicts.length + '</b> 条</span>');
+  return a.length ? a.join(' · ') : '本次没有需要改的';
+}
+function _extraBoxes(r){
+  var h = '';
+  if (r.merged_companies && r.merged_companies.length) {
+    h += '<div class="rep-box"><div class="rep-t">本次合并了 ' + r.merged_companies.length + ' 条重复公司</div><div class="rep-list">';
+    h += r.merged_companies.map(function(m){
+      return '<div class="rep-row">' + esc((m.from || []).join(' / ')) + ' → <b>' + esc(m.into || '') + '</b></div>';
+    }).join('') + '</div></div>';
+  }
+  if (r.new_statuses && r.new_statuses.length) {
+    h += '<div class="rep-box"><div class="rep-t">自动新建了 ' + r.new_statuses.length + ' 个状态</div><div class="rep-list">';
+    h += r.new_statuses.map(function(s){
+      return '<div class="rep-row">「' + esc(s.label || '') + '」已加入状态栏</div>';
+    }).join('') + '</div></div>';
+  }
+  return h;
+}
+function _conflictBox(kind, r, repTime){
+  var all = r.conflicts || [];
+  var vis = [];
+  all.forEach(function(c, i){ if (!isDismissed(kind, repTime, c.company, c.job, c.incoming_status)) vis.push({ c: c, i: i }); });
+  if (!vis.length) return '';
+  var h = '<div class="rep-box rep-box-warn" id="cfbox-' + kind + '"><div class="rep-t">冲突待确认（' + vis.length + ' 条）'
+    + ' —— 点「采纳」才改台账，点「不采纳」就不再提示</div>'
+    + '<div class="rep-acts"><button class="btn btn-s btn-xs" onclick="adoptAllConflicts(\'' + kind + '\')">全部采纳</button>'
+    + '<button class="btn btn-s btn-xs" onclick="dismissAllConflicts(\'' + kind + '\')">全部不采纳</button></div>'
+    + '<div class="rep-list" id="cflist-' + kind + '">';
+  h += vis.map(function(x){
+    var c = x.c, i = x.i;
+    return '<div class="rep-row" id="cf-' + kind + '-' + i + '"><b>' + esc(c.company || '') + '</b>' +
+      (c.job ? ' <span class="rep-dim">' + esc(c.job) + '</span>' : '') +
+      ' <span class="rep-dim">' + esc(c.reason || '') + '</span>' +
+      ' <button class="btn btn-s btn-xs" onclick="adoptConflict(\'' + kind + '\',' + i + ',this)">采纳为 ' + esc(c.incoming_label || '') + '</button>' +
+      ' <button class="btn btn-s btn-xs" onclick="dismissConflict(\'' + kind + '\',' + i + ',this)">不采纳</button></div>';
+  }).join('');
+  return h + '</div></div>';
+}
+
+// ===== 邮箱扫描状态 =====
+function fmtScanTime(iso) {
+  if (!iso) return '';
+  const d = new Date(iso.replace(/-/g,'/'));
+  const today = new Date();
+  const isToday = d.toDateString() === today.toDateString();
+  return isToday ? iso.split(' ')[1] : iso;
+}
+function loadScanStatus() {
+  fetch(LOCAL_API + '/api/scan_status').then(r => r.json()).then(res => {
+    const el = document.getElementById('scanStatus');
+    if (res.ok && res.log) {
+      const r = res.log;
+      _SCAN_ITEMS = r.items || [];
+      _SCAN_CONFLICTS = r.conflicts || [];
+      _SCAN_TIME = r.time || '';
+      let _sh = `上次扫描 <b>${fmtScanTime(r.time)}</b>${r.engine?' <span style="color:#bbb">（'+r.engine+'）</span>':''}（共扫 ${r.total} 封，求职 ${r.job_emails} 封）`;
+      _sh += '<div class="rep-dim" style="margin:6px 0">' + _statLine(r) + '</div>';
+      var _visItems = _SCAN_ITEMS.map(function(x, i){ return { x: x, i: i }; })
+        .filter(function(o){ return !isDismissed('scan', _SCAN_TIME, o.x.company, o.x.job, '__adopted__'); })
+        .sort(function(a, b){                    // 老板定的规矩：最近的时间在最上面
+          var da = String(a.x.date || ''), db = String(b.x.date || '');
+          if (da === db) return b.i - a.i;
+          return da < db ? 1 : -1;
+        });
+      if (_visItems.length || _SCAN_CONFLICTS.length) {
+        _sh += '<div class="rep-acts"><button class="btn btn-s btn-xs" onclick="adoptAll(\'scan\')">全部采纳为表状态</button>'
+             + '<span class="rep-dim" style="margin-left:8px">采纳=把这个状态写进台账并标记为你手动确认</span></div>';
+      }
+      if (_visItems.length) {
+        _sh += '<details class="rep-box"><summary class="rep-t">上次识别到的 ' + _visItems.length + ' 条（点开核对，可逐条采纳）</summary><div class="rep-list">';
+        _sh += _visItems.map(function(o){
+          var x = o.x, idx = o.i;
+          var _jb = (x.job && x.job !== '未知') ? x.job : '（岗位没识别出）';
+          return '<div class="rep-row" id="it-scan-' + idx + '"><b>' + esc(x.company || '（没公司名）') + '</b>' +
+            ' <span class="rep-dim">' + esc(_jb) + '</span>' +
+            ((x.final_status || x.status) ? ' <span class="rep-st">' + esc(_stFix(x.final_status || x.status)) + '</span>' : '') +
+            (x.deadline && x.deadline !== '无' ? ' <span class="rep-dim" style="color:#b03a2e">⏰ 截止 ' + esc(x.deadline) + '</span>' : '') +
+            (x.date ? ' <span class="rep-dim">' + esc(x.date) + '</span>' : '') +
+            (x.review ? ' <span class="rep-warn">需人工核对</span>' : '') +
+            ' <button class="btn btn-s btn-xs" onclick="adoptItem(\'scan\',' + idx + ',this)">采纳为表状态</button>' +
+            '</div>';
+        }).join('') + '</div></details>';
+      }
+      _sh += _extraBoxes(r);
+      _sh += _conflictBox('scan', r, _SCAN_TIME);
+      if (r.failed && r.failed.length) {
+        _sh += '<div class="rep-box rep-box-warn"><div class="rep-t">有 ' + r.failed.length + ' 封没能自动识别</div><div class="rep-list">';
+        _sh += r.failed.slice(0, 20).map(function(x){ return '<div class="rep-row">' + esc(x) + '</div>'; }).join('') + '</div></div>';
+      }
+      el.innerHTML = _sh;
+    } else {
+      el.textContent = '还没扫过邮箱，点右侧按钮扫描';
+    }
+  }).catch(() => {});
+}
+async function triggerScan() {
+  const el = document.getElementById('scanStatus');
+  el.style.color = '#e65100';
+  el.textContent = '正在扫描邮箱…（约10-30秒）';
+  try {
+    const res = await fetch(LOCAL_API + '/api/scan', { method: 'POST' });
+    const data = await res.json();
+    el.style.color = '#888';
+    if (data.ok) {
+      const r = data.report || {};
+      const cf = (r.conflicts || []).length;
+      el.innerHTML = `扫描完成：共 ${r.total} 封 → 求职 ${r.job_emails} 封 · 新增 ${r.added || 0} 条 · 已同步 ${r.synced || 0} 条 · 冲突 ${cf} 条`
+        + '<div class="rep-dim" style="margin-top:6px">正在刷新看板，刷新后这里会有每条明细和「采纳」按钮…</div>';
+      setTimeout(function(){ location.reload(); }, 1200);
+    } else {
+      el.textContent = `扫描失败：${data.error}`;
+      el.style.color = '#c62828';
+    }
+  } catch (err) {
+    el.textContent = '连不上服务，请确认 server.py 在运行';
+    el.style.color = '#c62828';
+  }
+}
+async function submitAiJob() {
+  const url = document.getElementById('aiUrl').value.trim();
+  const job = document.getElementById('aiJob').value.trim();
+  const referral = document.getElementById('aiReferral').value.trim();
+  if (!url.startsWith('http')) { aiMsg('请先粘贴以 http 开头的招聘网址', false); return; }
+  const btn = document.getElementById('aiSubmitBtn');
+  btn.disabled = true; btn.textContent = 'AI 识别中…';
+  // ★ 第一步：快速预览（1-3 秒先出公司名，不让用户干等）
+  try {
+    const q = await fetch(LOCAL_API + '/api/add_job', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, job, referral, stage: 'quick' })
+    });
+    const qj = await q.json();
+    if (qj && qj.ok && qj.quick && qj.preview && qj.preview.company) {
+      aiMsg('识别中…  公司：' + qj.preview.company + '（岗位还在后台识别，稍等几秒）', true);
+    } else if (qj && qj.title) {
+      aiMsg('识别中…  页面标题：' + qj.title + '（正在进一步识别，稍等）', true);
+    } else {
+      aiMsg('正在识别（几秒）…', true);
+    }
+  } catch (e) { /* 预览失败不影响后面 */ }
+
+  try {
+    const res = await fetch(LOCAL_API + '/api/add_job', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, job, referral })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      if (data.action === '已存在') {
+        const stMap = {};
+        (typeof statuses !== 'undefined' ? statuses : []).forEach(s => { stMap[s.key] = s.label; });
+        const label = stMap[data.status] || data.status || '未知';
+        const extra = (data.filled && data.filled.length) ? ('，顺手帮你补上了：' + data.filled.join('、')) : '';
+        aiMsg(`${data.record.company} 已经在看板里了 —— 当前状态：${label}${extra}（没有重复添加）`, true);
+        if (data.filled && data.filled.length) setTimeout(() => location.reload(), 1200);   // 补了东西就刷新，让你看得见
+      } else {
+        aiMsg(`${data.action}成功：${data.record.company} ${data.record.job}，正在刷新…`, true);
+        setTimeout(() => location.reload(), 800);
+      }
+    } else {
+      aiMsg(data.error || '识别失败', false);
+    }
+  } catch (err) {
+    aiMsg('连不上本地服务。请先双击运行 server.py', false);
+  }
+  btn.disabled = false; btn.textContent = '识别并添加';
+}
+/* ═══ 登录信息（各公司账号/密码/手机号，自动填用） ═══ */
+var LOGINS = [];
+/* 打开浏览器帮用户登录（后端会调 patrol/login.py，弹出真浏览器窗口） */
+var _loginPollTimer = null;
+function _stopLoginPoll(){ if (_loginPollTimer) { clearInterval(_loginPollTimer); _loginPollTimer = null; } }
+/* 轮询登录态：login.py 检测成功会写 login_state.json，/api/patrol_targets 能读到 */
+function _pollLoginState(company){
+  _stopLoginPoll();
+  var tries = 0;
+  _loginPollTimer = setInterval(function(){
+    tries++;
+    if (tries > 100) { _stopLoginPoll(); return; }   // 最多盯 5 分钟
+    fetch(LOCAL_API + '/api/patrol_targets').then(function(r){ return r.json(); }).then(function(j){
+      if (!(j && j.ok)) return;
+      var saved = j.saved_logins || [];
+      var hit = saved.some(function(s){ return sameCompanyJS(s, company); });
+      if (hit) {
+        _stopLoginPoll();
+        PATROL_SAVED = saved;             // 全局登录态同步，报告/管理页都跟着变
+        var st = document.getElementById('patrolStatus');
+        if (st) st.innerHTML = '<div class="rep-box"><div class="rep-t">✅ ' + esc(company) + ' 已登录</div>'
+          + '<div class="rep-dim">登录态已保存，巡检时自动带上。</div>'
+          + '<div class="rep-acts"><button class="btn btn-s btn-xs" onclick="triggerPatrol()">去巡检</button>'
+          + '<button class="btn btn-s btn-xs" onclick="reloadPatrolReport()">返回报告</button></div></div>';
+        toast(company + ' 登录成功');
+      }
+    }).catch(function(){});
+  }, 3000);
+}
+function openBrowserFor(company){
+  if (!company) { toast('没拿到公司名'); return; }
+  var _t = PATROL_TARGETS.find(function(x){ return sameCompanyJS(x.company, company); });
+  if (_t && !String(_t.login_url || '').trim()) {
+    toast('这家是非官网渠道（没有官网后台），不用登录');
+    openPatrolTargets();
+    return;
+  }
+  const st = document.getElementById('patrolStatus');
+  const old = st ? st.innerHTML : '';
+  if (st) st.innerHTML = '<div class="rep-box"><div class="rep-t">正在打开浏览器（' + esc(company) + '）…</div>'
+    + '<div class="rep-dim">弹出窗口后，在里面输验证码/扫码完成登录（账号密码我会自动填好）。</div>'
+    + '<div class="rep-dim">登录成功 8 秒后窗口自动关，这边会自动同步成「已登录」。</div></div>';
+  fetch(LOCAL_API + '/api/login_browser', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ company: company })
+  }).then(r => r.json()).then(j => {
+    if (j && j.ok) {
+      if (st) st.innerHTML = '<div class="rep-box"><div class="rep-t">浏览器已打开（' + esc(company) + '）</div>'
+        + '<div class="rep-dim">请在弹出的窗口里完成登录（验证码自己输，账号密码已自动填）。</div>'
+        + '<div class="rep-dim">登录成功后窗口自动关，这里几秒后自动显示「已登录」。</div>'
+        + '<div class="rep-acts"><button class="btn btn-s btn-xs" onclick="openBrowserFor(\'' + esc(company) + '\')">重新打开浏览器</button>'
+        + '<button class="btn btn-s btn-xs" onclick="triggerPatrol()">去巡检</button>'
+        + '<button class="btn btn-s btn-xs" onclick="reloadPatrolReport()">返回报告</button></div></div>';
+      _pollLoginState(company);
+    }
+    else if (st) st.innerHTML = old + '<div class="rep-dim" style="color:var(--red)">打开失败：' + ((j && j.error) || '未知') + '</div>';
+  }).catch(() => { if (st) st.innerHTML = old + '<div class="rep-dim" style="color:var(--red)">连不上本地服务</div>'; });
+}
+function reloadPatrolReport() {
+  /* 先刷新登录态（PATROL_SAVED），再渲染报告——已登录的公司立即显示"已登录 ✅" */
+  fetch(LOCAL_API + '/api/patrol_targets').then(function(r){ return r.json(); }).then(function(j){
+    if (j && j.ok) { PATROL_TARGETS = j.targets || []; PATROL_SAVED = j.saved_logins || []; }
+  }).catch(function(){}).finally(function(){
+    fetch(LOCAL_API + '/api/patrol_status').then(r => r.json()).then(renderPatrolReport).catch(function(){
+      if (typeof toast === 'function') toast('暂时读不到巡检报告');
+    });
+  });
+}
+
+/* 旧状态名 → 现在的名字（报告里的历史数据也能显示对） */
+var _ST_ALIAS = {
+  '已拒绝': '已挂',
+  '流程中': '简历筛选中',
+  'ai面试完成': 'AI面试完成',
+  '待面试': '面试',
+  '终面': '面试',
+  '待笔试/测评': '测评',
+  '待笔试': '笔试',
+  '简历筛选中': '简历筛选中',
+  'OC': 'Offer',
+};
+function _stFix(s){ s = String(s||''); return _ST_ALIAS[s] || s; }
+
+function openLogins(){
+  document.getElementById('loginsOverlay').classList.add('show');
+  loadLogins();
+}
+function closeLogins(){ document.getElementById('loginsOverlay').classList.remove('show'); }
+function loadLogins(){
+  fetch(LOCAL_API + '/api/logins').then(r => r.json()).then(j => {
+    LOGINS = (j && j.items) || [];
+    if (!LOGINS.length) LOGINS = [{ company: "腾讯", url: "", user: "", password: "", phone: "", note: "" }];
+    renderLogins();
+  }).catch(() => { renderLogins(); });
+}
+function renderLogins(){
+  const box = document.getElementById('loginsList');
+  if (!LOGINS.length) {
+    box.innerHTML = '<div class="login-empty">还没有记录。点下面「加一家公司」开始填。</div>';
+    return;
+  }
+  box.innerHTML = LOGINS.map(function(x, i){
+    return '<div class="login-card">' +
+      '<div class="login-card-h"><span class="login-card-n">' + (i + 1) + '</span>' +
+      '<input class="login-co" list="loginCompanyList" value="' + esc(x.company||'') + '" oninput="LOGINS[' + i + '].company=this.value;onLoginCompanyInput(' + i + ')" placeholder="公司名，如：腾讯（可下拉）"></div>' +
+      '<div class="form-group"><label>登录网址（选公司自动带出，可以不填）</label>' +
+      '<input id="loginUrl_' + i + '" value="' + esc(x.url||'') + '" oninput="LOGINS[' + i + '].url=this.value" placeholder="https://join.qq.com/"></div>' +
+      '<div class="form-row">' +
+      '<div class="form-group"><label>账号或邮箱</label><input list="loginAccountList" value="' + esc(x.user||'') + '" oninput="LOGINS[' + i + '].user=this.value"></div>' +
+      '<div class="form-group"><label>密码</label><input list="loginPwdList" value="' + esc(x.password||'') + '" oninput="LOGINS[' + i + '].password=this.value"></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+      '<div class="form-group"><label>手机号（收验证码用）</label><input list="loginPhoneList" value="' + esc(x.phone||'') + '" oninput="LOGINS[' + i + '].phone=this.value"></div>' +
+      '<div class="form-group" style="display:flex;align-items:flex-end"><button class="btn btn-s btn-sm" onclick="delLoginRow(' + i + ')">删掉这家</button></div>' +
+      '</div>' +
+      '</div>';
+  }).join('');
+  refreshLoginDatalists();
+}
+/* 下拉数据源：公司=已保存登录公司∪台账公司；账号/手机/密码=历史填过去重 */
+function refreshLoginDatalists(){
+  function uniqVals(field){
+    var s = {}, out = [];
+    LOGINS.forEach(function(x){
+      var v = String(x[field] || '').trim();
+      if (v && !s[v]) { s[v] = 1; out.push(v); }
+    });
+    return out;
+  }
+  function fill(id, vals){
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = vals.map(function(v){ return '<option value="' + esc(v) + '">'; }).join('');
+  }
+  var cos = {}, coOut = [];
+  LOGINS.forEach(function(x){
+    var c = String(x.company || '').trim();
+    if (c && !cos[normCompany(c)]) { cos[normCompany(c)] = 1; coOut.push(c); }
+  });
+  (records || []).forEach(function(r){
+    var c = String(r.company || '').trim();
+    var k = normCompany(c);
+    if (c && !cos[k]) { cos[k] = 1; coOut.push(c); }
+  });
+  fill('loginCompanyList', coOut.sort());
+  fill('loginAccountList', uniqVals('user'));
+  fill('loginPhoneList', uniqVals('phone'));
+  fill('loginPwdList', uniqVals('password'));
+}
+/* 选了公司且本行网址空着：自动从台账/其他已保存行带出网址（只填空，不覆盖手改） */
+function onLoginCompanyInput(i){
+  var x = LOGINS[i];
+  if (!x || String(x.url || '').trim()) return;
+  var co = String(x.company || '').trim();
+  if (!co) return;
+  var u = ledgerUrlOf(co);
+  if (!u) {
+    for (var j = 0; j < LOGINS.length; j++) {
+      var y = LOGINS[j];
+      if (j !== i && sameCompanyJS(y.company, co) && String(y.url || '').trim()) { u = y.url; break; }
+    }
+  }
+  if (u) {
+    x.url = u;
+    var inp = document.getElementById('loginUrl_' + i);
+    if (inp) inp.value = u;
+  }
+}
+/* 新加一家：账号/手机号/密码默认沿用上一家（秋招基本同账号同手机），公司网址重新选 */
+function addLoginRow(){
+  var prev = LOGINS[LOGINS.length - 1] || {};
+  LOGINS.push({company:"", url:"",
+               user: prev.user || "", password: prev.password || "",
+               phone: prev.phone || "", note:""});
+  renderLogins();
+}
+function delLoginRow(i){ LOGINS.splice(i,1); renderLogins(); }
+function saveLogins(){
+  fetch(LOCAL_API + '/api/logins', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ items: LOGINS.filter(function(x){ return (x.company||'').trim(); }) })
+  }).then(r => r.json()).then(j => {
+    const st = document.getElementById('loginsState');
+    if (j && j.ok) { LOGINS = j.items || []; renderLogins(); if (st) st.textContent = '已保存（只存在你电脑上）'; }
+    else if (st) st.textContent = '保存失败：' + ((j && j.error) || '未知');
+  }).catch(() => {
+    const st = document.getElementById('loginsState'); if (st) st.textContent = '连不上本地服务';
+  });
+}
+
+async function triggerPatrol() {
+  const el = document.getElementById('patrolStatus');
+  el.style.color = '#00695c';
+  el.textContent = '正在巡检官网…（每家公司约10秒，已登录几家就几分钟）';
+  try {
+    const res = await fetch(LOCAL_API + '/api/patrol', { method: 'POST' });
+    const data = await res.json();
+    el.style.color = '#888';
+    if (data.ok) {
+      const r = data.report || {};
+      const cf = (r.conflicts || []).length;
+      el.innerHTML = `巡检完成：共 ${r.total} 家 · 识别出状态 ${r.identified} 家 · 新增 ${r.added || 0} 条 · 已同步 ${r.synced || 0} 条 · 冲突 ${cf} 条`
+        + '<div class="rep-dim" style="margin-top:6px">正在刷新看板，刷新后这里会有逐家明细和「采纳」按钮…</div>';
+      setTimeout(function(){ location.reload(); }, 1200);
+    } else {
+      el.textContent = `巡检失败：${data.error}`;
+      el.style.color = '#c62828';
+    }
+  } catch (err) {
+    el.textContent = '连不上服务，请确认 server.py 在运行';
+    el.style.color = '#c62828';
+  }
+}
+// 页面加载时显示上次巡检报告
+function renderPatrolReport(d) {
+  const el = document.getElementById('patrolStatus');
+  if (!el) return;
+  const st = d.status || {};             // 详细版（每家结果 + 原因）
+  const r = d.report || {};
+  const rows = st.results || [];
+  // 全新用户：还没有任何巡检记录 → 显示引导而不是空报告
+  if (!rows.length && !(r.changes || []).length && !(r.needs_login || []).length && !st.next_allowed_at) {
+    el.innerHTML = '<span style="color:#999">还没有巡检记录 —— 先在「登录信息」里添加要巡检的公司，再点「官网巡检」。</span>';
+    return;
+  }
+  _PATROL_CONFLICTS = r.conflicts || [];
+  _PATROL_TIME = r.time || st.generated_at || '';
+  let _h = '上次巡检 <b>' + _PATROL_TIME + '</b>：' + rows.length + ' 家';
+  _h += '<div class="rep-dim" style="margin:6px 0">' + _statLine(r) + '</div>';
+  if (rows.length) {
+    _h += '<details class="rep-box"><summary class="rep-t">逐家结果（' + rows.length + ' 家）—— 点这里展开／收起</summary><div class="rep-list">';
+    _h += rows.map(function(i){
+      /* 上轮"未登录"，但现在已经登录 → 直接显示已登录（登录态以 login_state.json 为准） */
+      var nowLoggedIn = (i.status_code === '未登录') &&
+        (PATROL_SAVED || []).some(function(s){ return sameCompanyJS(s, i.company); });
+      var dispStatus = nowLoggedIn ? '已登录 ✅' : (i.status_code || '?');
+      var line = '<div class="rep-row"><b>' + i.company + '</b> → ' + dispStatus;
+      if (i.needs_review && !nowLoggedIn) line += ' <span class="rep-warn">需要你看一眼</span>';
+      if (nowLoggedIn) line += ' <span class="rep-dim">登录态已保存，下次巡检自动带上</span>';
+      if (i.nav_ok) line += ' <span class="rep-dim">✅已查投递记录页</span>';
+      var _d = [];
+      if (i.landed_url && i.status_code !== '非官网渠道')
+        _d.push((i.nav_ok ? '✅ 已进入「我的投递/申请记录」版块，最终页：'
+                          : '⚠️ 没找到投递记录版块，最终停在：') + esc(i.landed_url));
+      if (i.evidence) _d.push('证据：' + i.evidence);
+      if (i.status_raw && !nowLoggedIn) _d.push(i.status_raw);
+      if (i.note) _d.push(i.note);
+      if (_d.length) line += '<div class="rep-dim">' + _d.join('<br>') + '</div>';
+      line += '<div class="rep-acts">' +
+        (nowLoggedIn
+          ? '<button class="btn btn-s btn-xs" onclick="triggerPatrol()">去巡检 ' + esc(i.company) + '</button>'
+          : '<button class="btn btn-s btn-xs" onclick="openBrowserFor(\'' + esc(i.company) + '\')">打开浏览器登录 ' + i.company + '</button>') +
+        (i.needs_review && !nowLoggedIn ? '<button class="btn btn-s btn-xs" onclick="openPatrolTargets()">改网址 / 加公司</button>' : '') +
+        '</div>';
+      return line + '</div>';
+    }).join('');
+    _h += '</div></details>';
+  }
+  /* 需要重新登录的名单也按最新登录态过滤：已登录的不再催 */
+  var needLogin = (r.needs_login || []).filter(function(c){
+    return !(PATROL_SAVED || []).some(function(s){ return sameCompanyJS(s, c); });
+  });
+  if (needLogin.length) {
+    _h += '<div class="rep-box rep-box-warn"><div class="rep-t">需要重新登录（' + needLogin.length + ' 家，本轮跳过）</div><div class="rep-list">'
+      + needLogin.map(function(c){ return '<div class="rep-row">' + esc(c) + ' <button class="btn btn-s btn-xs" onclick="openBrowserFor(\'' + esc(c) + '\')">打开浏览器登录</button></div>'; }).join('')
+      + '</div></div>';
+  }
+  if (r.skipped_non_official && r.skipped_non_official.length) {
+    _h += '<div class="rep-box"><div class="rep-t">非官网渠道，自动跳过（' + r.skipped_non_official.length + ' 家）</div><div class="rep-list">'
+      + r.skipped_non_official.map(function(c){ return '<div class="rep-row">' + esc(c) + ' <span class="rep-dim">没有官网后台（BOSS直聘/牛客/内推等）</span></div>'; }).join('')
+      + '</div></div>';
+  }
+  _h += _extraBoxes(r);
+  _h += _conflictBox('patrol', r, _PATROL_TIME);
+  if (r.changes && r.changes.length) {
+    _h += '<div class="rep-box"><div class="rep-t">状态有变化的</div><div class="rep-list">' + r.changes.map(function(c){ return '<div class="rep-row">' + c + '</div>'; }).join('') + '</div></div>';
+  }
+  if (st.next_allowed_at) _h += '<div class="rep-dim" style="margin-top:6px">下次可巡检：' + st.next_allowed_at + '（4 小时间隔，保护账号）</div>';
+  el.innerHTML = _h;
+}
+/* 首次加载：先拉登录态再渲染报告（已登录的公司显示"已登录 ✅"而不是上轮的"未登录"） */
+fetch(LOCAL_API + '/api/patrol_targets').then(function(r){ return r.json(); }).then(function(j){
+  if (j && j.ok) { PATROL_TARGETS = j.targets || []; PATROL_SAVED = j.saved_logins || []; }
+}).catch(function(){}).finally(function(){
+  fetch(LOCAL_API + '/api/patrol_status').then(r => r.json()).then(renderPatrolReport).catch(() => {});
+});
+
+/* ===== 巡检公司管理（加公司 / 网址 / 别名 → 写 patrol/config.json）===== */
+var _PENDING = [];
+function openPatrolTargets() {
+  document.getElementById('patrolTargetsOverlay').classList.add('show');
+  refreshPatrolCompanyList();
+  loadPatrolTargets();
+}
+/* 巡检公司下拉 = 台账里的公司去重（仍可手输新公司） */
+function refreshPatrolCompanyList(){
+  var seen = {}, out = [];
+  (records || []).forEach(function(r){
+    var c = String(r.company || '').trim();
+    if (!c) return;
+    var k = normCompany(c);
+    if (seen[k]) return;
+    seen[k] = 1; out.push(c);
+  });
+  var el = document.getElementById('ptCompanyList');
+  if (el) el.innerHTML = out.sort().map(function(c){
+    return '<option value="' + esc(c) + '">';
+  }).join('');
+}
+function closePatrolTargets() { document.getElementById('patrolTargetsOverlay').classList.remove('show'); }
+function loadPatrolTargets() {
+  fetch(LOCAL_API + '/api/patrol_targets').then(r => r.json()).then(function(j){
+    if (j && j.ok) { PATROL_TARGETS = j.targets || []; PATROL_SAVED = j.saved_logins || []; }
+    renderPatrolTargets();
+  }).catch(function(){ renderPatrolTargets(); });
+}
+/* 台账里有、巡检清单里还没有的公司（按归一公司名去重） */
+function pendingCompanies() {
+  var out = [], seen = {};
+  records.forEach(function(r){
+    var co = String(r.company || '').trim();
+    if (!co) return;
+    if (PATROL_TARGETS.some(function(t){ return sameCompanyJS(t.company, co); })) return;
+    var k = normCompany(co);
+    if (seen[k]) { if (!seen[k].url && r.url) seen[k].url = r.url; return; }
+    var o = { company: co, job: String(r.job || ''), url: String(r.url || '') };
+    seen[k] = o; out.push(o);
+  });
+  return out;
+}
+function ledgerUrlOf(company) {
+  var hit = records.find(function(r){ return sameCompanyJS(r.company, company); });
+  return hit ? String(hit.url || '').trim() : '';
+}
+/* 选/输公司名时联动网址：下拉精确选中台账公司 → 直接带出该公司网址（不要求唯一）；
+   手输过程中 → 维持旧规则：模糊唯一命中且有网址才填，避免乱猜 */
+function autoFillUrlFromRecords() {
+  var inp = document.getElementById('ptCompany');
+  var urlInp = document.getElementById('ptUrl');
+  var v = (inp.value || '').trim();
+  if (!v) return;
+  var exact = records.filter(function(r){ return sameCompanyJS(r.company, v); })
+                     .map(function(r){ return String(r.url || '').trim(); })
+                     .filter(Boolean)[0];
+  if (exact) { urlInp.value = exact; return; }
+  var nv = normCompany(v);
+  if (!nv) return;
+  var hits = records.filter(function(r){
+    var nc = normCompany(r.company);
+    return nc && (nc.indexOf(nv) > -1 || nv.indexOf(nc) > -1);
+  });
+  if (hits.length === 1 && String(hits[0].url || '').trim()) {
+    urlInp.value = hits[0].url;
+  }
+}
+function renderPatrolTargets() {
+  // ① 待添加区（台账有、巡检没有）
+  var pend = document.getElementById('patrolPendingList');
+  if (pend) {
+    _PENDING = pendingCompanies();
+    if (!_PENDING.length) {
+      pend.innerHTML = '<div class="rep-dim" style="margin:6px 0">台账里的公司都已在巡检清单里 ✓</div>';
+    } else {
+      pend.innerHTML = '<div class="rep-t">台账里有、巡检清单还没有（' + _PENDING.length + ' 家）'
+        + ' <button class="btn btn-s btn-xs" onclick="joinAllPending()">一键加入全部</button></div>'
+        + '<div class="rep-list" style="max-height:190px">'
+        + _PENDING.map(function(p, i){
+            var u = p.url ? '<span class="pt-u">' + esc(p.url) + '</span>'
+                          : '<span class="pt-u"><span class="pt-tag off">非官网渠道</span></span>';
+            return '<div class="pt-li"><span class="pt-n">' + esc(p.company) + '</span>'
+              + (p.job ? '<span class="rep-dim">' + esc(p.job) + '</span>' : '')
+              + u
+              + '<button class="btn btn-s btn-xs" onclick="joinPending(' + i + ')">加入巡检</button>'
+              + '<button class="btn btn-s btn-xs" style="color:#b03a2e" onclick="dismissPending(' + i + ')">不加入</button>'
+              + '</div>';
+          }).join('')
+        + '</div>';
+    }
+  }
+  // ② 已配置列表（dismissed 的"永不提示"公司单独列在下方，可恢复）
+  var box = document.getElementById('patrolTargetsList');
+  if (!box) return;
+  var actTargets = PATROL_TARGETS.filter(function(t){ return !t.dismissed; });
+  var disTargets = PATROL_TARGETS.filter(function(t){ return !!t.dismissed; });
+  if (!actTargets.length) {
+    box.innerHTML = '<div class="login-empty">还没有配置公司。上面填公司名和登录网址，点「保存这家」。</div>';
+  }
+  box.innerHTML = actTargets.length ? actTargets.map(function(t){
+    var i = PATROL_TARGETS.indexOf(t);
+    var saved = PATROL_SAVED.indexOf(t.company) > -1;
+    var on = t.enabled !== false;
+    var hasUrl = !!(t.login_url || '').trim();
+    var tag = !hasUrl ? '<span class="pt-tag off">非官网渠道</span>'
+            : (saved ? '<span class="pt-tag on">已登录</span>' : '<span class="pt-tag off">未登录</span>');
+    var loginBtn = hasUrl
+      ? '<button class="btn btn-s btn-xs" onclick="openBrowserFor(\'' + esc(t.company || '') + '\')">打开浏览器登录</button>' : '';
+    var useLedger = (!hasUrl && ledgerUrlOf(t.company))
+      ? '<button class="btn btn-s btn-xs" onclick="useLedgerUrl(' + i + ')">用台账网址补上</button>' : '';
+    return '<div class="pt-li' + (on ? '' : ' off') + '">' +
+      '<span class="pt-n">' + esc(t.company || '') + '</span>' +
+      '<span class="pt-u">' + esc(t.login_url || '（没有网址）') + '</span>' + tag +
+      loginBtn + useLedger +
+      '<button class="btn btn-s btn-xs" onclick="editPatrolTarget(' + i + ')">改网址</button>' +
+      '<button class="btn btn-s btn-xs" onclick="disablePatrolTarget(' + i + ')">' + (on ? '停用' : '启用') + '</button>' +
+      '</div>';
+  }).join('') : '';
+  if (disTargets.length) {
+    box.innerHTML += '<div class="rep-t" style="margin-top:10px">已排除、不再提示（' + disTargets.length + ' 家）</div>'
+      + disTargets.map(function(t){
+          return '<div class="pt-li off"><span class="pt-n">' + esc(t.company || '') + '</span>'
+            + '<span class="pt-u">不加入巡检，候选列表不再提示</span>'
+            + '<span class="pt-tag off">已排除</span>'
+            + '<button class="btn btn-s btn-xs" onclick="restoreDismissed(\'' + esc(t.company || '').replace(/'/g,"\\'") + '\')">恢复提示</button>'
+            + '</div>';
+        }).join('');
+  }
+}
+function editPatrolTarget(i) {
+  var t = PATROL_TARGETS[i]; if (!t) return;
+  document.getElementById('ptCompany').value = t.company || '';
+  document.getElementById('ptUrl').value = t.login_url || '';
+  document.getElementById('ptAliases').value = (t.aliases || []).join(',');
+  document.getElementById('ptNote').value = t.note || '';
+  var st = document.getElementById('ptState'); if (st) st.textContent = '已填到上面的输入框，改完点「保存这家」';
+}
+function disablePatrolTarget(i) {
+  var t = PATROL_TARGETS[i]; if (!t) return;
+  postPatrolTarget({
+    company: t.company,
+    login_url: t.login_url || '',
+    aliases: (t.aliases || []).join(','),
+    note: t.note || '',
+    enabled: t.enabled === false     // 当前停用 → 启用；当前启用 → 停用
+  });
+}
+/* 用台账里的网址补上 */
+function useLedgerUrl(i) {
+  var t = PATROL_TARGETS[i]; if (!t) return;
+  var u = ledgerUrlOf(t.company);
+  if (!u) { toast('台账里这家也没有网址'); return; }
+  postPatrolTarget({
+    company: t.company, login_url: u,
+    aliases: (t.aliases || []).join(','), note: t.note || '', enabled: true
+  });
+}
+/* 加入巡检（待添加区） */
+function joinPending(i) {
+  var p = _PENDING[i]; if (!p) return;
+  postPatrolTarget({ company: p.company, login_url: p.url || '', aliases: '', note: '', enabled: true, dismissed: false });
+}
+/* 不加入：以后候选列表不再提示这家（可在下方"已排除"里恢复） */
+function dismissPending(i) {
+  var p = _PENDING[i]; if (!p) return;
+  if (!confirm('确定不把「' + p.company + '」加入巡检？\n\n以后候选列表不再提示它（可在"已配置"列表里恢复提示）。')) return;
+  postPatrolTarget({
+    company: p.company, login_url: p.url || '', aliases: '',
+    note: '手动排除，不再提示', enabled: false, dismissed: true
+  });
+}
+/* 恢复"已排除"公司：重新出现在候选列表（不直接启用巡检，仍需手动加入） */
+function restoreDismissed(company) {
+  _postTarget({
+    company: company, login_url: '', aliases: '',
+    note: '', enabled: false, dismissed: false
+  }).then(function(ok){ if (ok) loadPatrolTargets(); });
+}
+async function joinAllPending() {
+  var list = _PENDING.slice();
+  var done = 0;
+  for (var i = 0; i < list.length; i++) {
+    var ok = await _postTarget({ company: list[i].company, login_url: list[i].url || '', aliases: '', note: '', enabled: true });
+    if (ok) done++;
+  }
+  toast('已加入 ' + done + ' 家');
+  loadPatrolTargets();
+}
+function savePatrolTarget() {
+  var company = document.getElementById('ptCompany').value.trim();
+  var st = document.getElementById('ptState');
+  if (!company) { if (st) st.textContent = '公司名不能为空'; return; }
+  postPatrolTarget({
+    company: company,
+    login_url: document.getElementById('ptUrl').value.trim(),
+    aliases: document.getElementById('ptAliases').value.trim(),
+    note: document.getElementById('ptNote').value.trim(),
+    enabled: true
+  });
+}
+function _postTarget(body) {
+  return fetch(LOCAL_API + '/api/patrol_targets', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+  }).then(function(r){ return r.json(); })
+    .then(function(j){ if (j && j.ok) PATROL_TARGETS = j.targets || []; return !!(j && j.ok); })
+    .catch(function(){ return false; });
+}
+function postPatrolTarget(body) {
+  _postTarget(body).then(function(ok){
+    var st = document.getElementById('ptState');
+    if (ok) {
+      document.getElementById('ptCompany').value = '';
+      document.getElementById('ptUrl').value = '';
+      document.getElementById('ptAliases').value = '';
+      document.getElementById('ptNote').value = '';
+      if (st) st.textContent = '已保存';
+      loadPatrolTargets();
+    } else if (st) {
+      st.textContent = '保存失败（连不上本地服务？）';
+    }
+  });
+}
+loadPatrolTargets();   // 页面加载时读一次（供「打开浏览器登录」判断有没有网址）
+</script>
+</body>
+</html>

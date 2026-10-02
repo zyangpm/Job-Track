@@ -1,0 +1,27 @@
+# ===== 用户配置（Gmail 密码 / API Key，绝不能上传）=====
+.env
+
+# ===== Python 缓存 =====
+__pycache__/
+*.pyc
+
+# ===== 运行时个人数据（全部留在用户本地）=====
+*.csv
+trae_result*.json
+mail_cache.json
+scan_log.json
+learned_rules.json
+mail_last_seen.json
+auto_status_map.json
+_site_progress.json
+
+# ===== 官网巡检数据（含账号密码、登录态、浏览器档案）=====
+patrol/config.json
+patrol/state.json
+patrol/logins.json
+patrol/login_state.json
+patrol/patrol_report.json
+patrol/patrol_status.json
+patrol/patrol_last_seen.json
+patrol/login_last.log
+patrol/.secrets/

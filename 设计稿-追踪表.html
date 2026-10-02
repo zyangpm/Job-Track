@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【设计稿 v2 · 整体重设计】秋招投递追踪</title>
+<style>
+  /* =========================================================
+     设计稿 v2 —— 整体重设计（视觉层重做，功能/数据/按钮不动）
+     =========================================================
+     设计方向：暖纸编辑风（Warm Editorial）
+       米色宣纸底 + 墨色文字 + 朱红点缀 + 白卡细金边
+       宋体大标题制造"书卷气"，数字用衬线大字呈现
+     保留：全部功能按钮、12状态体系、统计、报告栏、卡片结构
+     ========================================================= */
+
+  :root {
+    /* 暖纸色系 */
+    --paper: #f5f0e6;          /* 米色宣纸底 */
+    --paper-deep: #efe8d8;     /* 稍深的米色（分组带） */
+    --ink: #2b2620;            /* 墨色主文字 */
+    --ink-soft: #6b6353;       /* 灰墨次要文字 */
+    --ink-faint: #a39a86;      /* 淡墨辅助文字 */
+    --gold-line: #ddd0b4;      /* 细金边 */
+    --gold-soft: #e9dfc9;      /* 浅金填充 */
+    --red: #b03a2e;            /* 朱红主色（深红按钮/强调） */
+    --red-deep: #8e2b21;       /* 深朱红 hover */
+    --red-soft: #f7e8e5;       /* 朱红浅底 */
+    --jade: #4a7c59;           /* 青玉（扫描/成功） */
+    --teal: #2f6f6b;           /* 黛青（巡检） */
+    --purple: #6d4c7d;         /* 绛紫（AI） */
+    --amber: #c07f1f;          /* 赭黄（笔试/提醒） */
+    --card: #fffdf8;           /* 卡片白（带暖调） */
+    --shadow: 0 2px 10px rgba(80, 66, 40, 0.06);
+    --shadow-hover: 0 8px 24px rgba(80, 66, 40, 0.10);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--paper);
+    /* 淡淡纸纹：两层极细斜线 */
+    background-image:
+      repeating-linear-gradient(45deg, rgba(160,140,100,0.018) 0 2px, transparent 2px 8px),
+      repeating-linear-gradient(-45deg, rgba(160,140,100,0.014) 0 2px, transparent 2px 10px);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .serif { font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif; }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 28px 60px; }
+
+  /* ================= 顶部横幅 ================= */
+  .hero {
+    position: relative;
+    padding: 44px 0 30px;
+    border-bottom: 1px solid var(--gold-line);
+    margin-bottom: 28px;
+  }
+  .hero::before {
+    /* 顶部朱红细带，像书脊 */
+    content: "";
+    position: absolute;
+    top: 0; left: -28px; right: -28px;
+    height: 6px;
+    background: linear-gradient(90deg, var(--red) 0%, var(--red-deep) 50%, var(--red) 100%);
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--red);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .hero h1 .accent { color: var(--red); }
+  .hero-sub {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .hero-seal {
+    /* 右上角一枚"印章"装饰 */
+    position: absolute;
+    right: 0; top: 44px;
+    width: 64px; height: 64px;
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    color: var(--red);
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-weight: 900;
+    font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl;
+    letter-spacing: 2px;
+    transform: rotate(3deg);
+    background: rgba(176,58,46,0.04);
+  }
+
+  /* ================= 统计长卷 ================= */
+  .stats-scroll {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: var(--card);
+    border: 1px solid var(--gold-line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-top: 26px;
+  }
+  .stat-cell {
+    flex: 1;
+    padding: 20px 10px 16px;
+    text-align: center;
+    position: relative;
+  }
+  .stat-cell + .stat-cell::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 1px;
+    background: var(--gold-soft);
+  }
+  .stat-cell .num {
+    font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+  .stat-cell .label {
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ================= 到期提醒 ================= */
+  .reminder-banner {
+    margin-top: 22px;
+    background: linear-gradient(90deg, var(--red-soft), #fdf3ec);
+    border: 1px solid #ecc9bf;
+    border-left: 4px solid var(--red);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 14px;
+    color: var(--red-deep);
+  }
+  .reminder-banner b { font-weight: 700; }
+  .reminder-banner .item { margin-top: 4px; color: var(--ink); }
+
+  /* ================= 操作台（搜索 + 按钮） ================= */
+  .console {
+    margin-top: 24px;
+    background: var(--card);
+    border: 1px solid var(--gold-line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 18px 20px;
+  }
+  .console-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 220px;
+    padding: 12px 18px;
+    border: 1.5px solid var(--gold-line);
+    border-radius: 999px;              /* 圆形胶囊搜索框 */
+    font-size: 14px;
+    outline: none;
+    background: var(--paper);
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+  .search-box:focus {
+    border-color: var(--red);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(176,58,46,0.10);
+  }
+  .search-box::placeholder { color: var(--ink-faint); }
+
+  .btn {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.18s;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-ink {                          /* 主按钮：墨色 */
+    background: var(--ink);
+    color: #f7f2e7;
+    box-shadow: 0 2px 8px rgba(43,38,32,0.25);
+  }
+  .btn-red { background: var(--red); color: #fff; box-shadow: 0 2px 8px rgba(176,58,46,0.25); }
+  .btn-jade { background: var(--jade); color: #fff; }
+  .btn-teal { background: var(--teal); color: #fff; }
+  .btn-purple { background: var(--purple); color: #fff; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--gold-line);
+  }
+  .btn-ghost:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  /* ================= 状态筛选（朱红描边胶囊） ================= */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--gold-line);
+  }
+  .filter-btn {
+    padding: 7px 16px;
+    border: 1.5px solid var(--gold-line);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: all 0.18s;
+  }
+  .filter-btn:hover { border-color: var(--red); color: var(--red); }
+  .filter-btn.active {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+    box-shadow: 0 2px 8px rgba(176,58,46,0.25);
+  }
+
+  /* ================= 报告双联（扫描/巡检） ================= */
+  .report-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .report-card {
+    background: var(--card);
+    border: 1px solid var(--gold-line);
+    border-radius: 14px;
+    padding: 16px 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .report-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+  .report-card.scan::before { background: var(--jade); }
+  .report-card.patrol::before { background: var(--teal); }
+  .report-title {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 16px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .report-card.scan .report-title { color: var(--jade); }
+  .report-card.patrol .report-title { color: var(--teal); }
+  .report-body { font-size: 13px; color: var(--ink-soft); line-height: 1.8; }
+
+  /* ================= 分组标题 ================= */
+  .group-title {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 34px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gold-line);
+  }
+  .group-title .gt-char {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--ink);
+  }
+  .group-title .gt-tag {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--ink-faint);
+  }
+  .group-title .count {
+    margin-left: auto;
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--red);
+  }
+
+  /* ================= 记录卡片（白卡细金边） ================= */
+  .card-list { display: flex; flex-direction: column; gap: 14px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--gold-line);
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 20px;
+    transition: all 0.18s;
+  }
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+    border-color: #cbbb95;
+  }
+  /* 左侧状态印章条 */
+  .card-seal {
+    flex: 0 0 46px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 4px;
+    color: #fff;
+  }
+  .seal-amber { background: var(--amber); }
+  .seal-purple { background: var(--purple); }
+  .seal-jade { background: var(--jade); }
+  .seal-red { background: var(--red); }
+
+  .card-main { flex: 1; min-width: 0; }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2px;
+  }
+  .card-company {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--ink);
+  }
+  .card-location {
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: var(--gold-soft);
+    padding: 3px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .card-job {
+    color: var(--red);
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .card-meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+    margin-bottom: 8px;
+  }
+  .card-meta b { color: var(--ink); font-weight: 600; }
+  .card-note {
+    font-size: 13px;
+    color: var(--amber);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .card-bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card-bottom select {
+    padding: 7px 12px;
+    border: 1.5px solid var(--gold-line);
+    border-radius: 8px;
+    font-size: 13px;
+    outline: none;
+    font-family: inherit;
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .card-bottom select:focus { border-color: var(--red); }
+  .quick-link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--ink);
+    color: #f7f2e7;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.18s;
+  }
+  .quick-link-btn:hover { background: var(--red); transform: translateY(-1px); }
+  .quick-link-btn.disabled {
+    background: var(--gold-soft); color: var(--ink-faint); pointer-events: none;
+  }
+  .due-badge {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .due-overdue { background: var(--red-soft); color: var(--red-deep); border: 1px solid #ecc9bf; }
+  .due-soon { background: #fdf3e3; color: var(--amber); border: 1px solid #eed9ae; }
+  .due-normal { background: var(--paper-deep); color: var(--ink-soft); }
+  .card-actions { margin-left: auto; display: flex; gap: 4px; }
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: var(--ink-faint);
+    transition: all 0.15s;
+  }
+  .icon-btn:hover { background: var(--paper-deep); color: var(--ink); }
+  .icon-btn.del:hover { color: var(--red); background: var(--red-soft); }
+
+  /* ================= 页脚说明 ================= */
+  .design-note {
+    margin-top: 44px;
+    padding: 22px 26px;
+    background: var(--card);
+    border: 1px dashed var(--gold-line);
+    border-radius: 14px;
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 2;
+  }
+  .design-note b { color: var(--ink); }
+
+  /* ================= 响应式 ================= */
+  @media (max-width: 720px) {
+    .container { padding: 0 16px 48px; }
+    .hero h1 { font-size: 30px; }
+    .hero-seal { display: none; }
+    .stats-scroll { flex-wrap: wrap; }
+    .stat-cell { flex: 1 1 33%; }
+    .stat-cell + .stat-cell::before { display: none; }
+    .report-row { grid-template-columns: 1fr; }
+    .card { flex-direction: column; gap: 12px; }
+    .card-seal {
+      flex: none; width: fit-content;
+      writing-mode: horizontal-tb;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      font-size: 13px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== 顶部横幅 ===== -->
+  <div class="hero">
+    <div class="hero-eyebrow">AUTUMN RECRUITMENT · 2027</div>
+    <h1>我的<span class="accent">秋招</span>投递追踪</h1>
+    <div class="hero-sub">已投递 + 内推码收藏 + 最近新加 · 直达官方校招网 · 状态日期本机自动保存</div>
+    <div class="hero-seal">秋招</div>
+
+    <!-- 统计长卷 -->
+    <div class="stats-scroll">
+      <div class="stat-cell"><div class="num serif" style="color:var(--ink)">136</div><div class="label">总数</div></div>
+      <div class="stat-cell"><div class="num serif" style="color:var(--ink-soft)">52</div><div class="label">已投递</div></div>
+      <div class="stat-cell"><div class="num serif" style="color:var(--amber)">8</div><div class="label">待笔试</div></div>
+      <div class="stat-cell"><div class="num serif" style="color:var(--purple)">12</div><div class="label">待面试</div></div>
+      <div class="stat-cell"><div class="num serif" style="color:var(--jade)">3</div><div class="label">Offer</div></div>
+      <div class="stat-cell"><div class="num serif" style="color:var(--red)">18</div><div class="label">已挂</div></div>
+    </div>
+  </div>
+
+  <!-- 到期提醒 -->
+  <div class="reminder-banner">
+    <b>即将到期</b>
+    <div class="item">腾讯 · 产品运营 — 笔试截止 2025-10-08（剩 2 天）</div>
+    <div class="item">字节跳动 · 内容运营 — 面试安排 2025-10-10</div>
+  </div>
+
+  <!-- 操作台 -->
+  <div class="console">
+    <div class="console-row">
+      <input class="search-box" placeholder="搜公司 / 岗位...">
+      <button class="btn btn-ink">+ 新增</button>
+      <button class="btn btn-purple">AI 添加</button>
+      <button class="btn btn-jade">扫描邮箱</button>
+      <button class="btn btn-teal">官网巡检</button>
+      <button class="btn btn-ghost">管理状态</button>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active">全部</button>
+      <button class="filter-btn">已投递</button>
+      <button class="filter-btn">待笔试</button>
+      <button class="filter-btn">待面试</button>
+      <button class="filter-btn">Offer</button>
+      <button class="filter-btn">已挂</button>
+      <button class="filter-btn">流程中</button>
+    </div>
+  </div>
+
+  <!-- 报告双联 -->
+  <div class="report-row">
+    <div class="report-card scan">
+      <div class="report-title">邮箱扫描报告</div>
+      <div class="report-body">
+        上次扫描：2025-10-06 14:32<br>
+        扫描 150 封 → 识别求职邮件 75 封 → 新增 3 条 / 更新 7 条<br>
+        待复核：0 条
+      </div>
+    </div>
+    <div class="report-card patrol">
+      <div class="report-title">官网巡检报告</div>
+      <div class="report-body">
+        上次巡检：2025-10-06 09:15<br>
+        已巡检 12 家 → 状态更新 2 条（腾讯、美团）<br>
+        登录态异常：腾讯、美团（需重新登录）
+      </div>
+    </div>
+  </div>
+
+  <!-- 分组：待笔试 -->
+  <div class="group-title">
+    <span class="gt-char">待笔试</span>
+    <span class="gt-tag">WRITTEN TEST</span>
+    <span class="count serif">8</span>
+  </div>
+  <div class="card-list">
+    <div class="card">
+      <div class="card-seal seal-amber">笔试</div>
+      <div class="card-main">
+        <div class="card-top">
+          <div class="card-company">腾讯</div>
+          <div class="card-location">深圳</div>
+        </div>
+        <div class="card-job">产品运营</div>
+        <div class="card-meta">
+          <span><b>投递：</b>2025-09-20</span>
+          <span><b>渠道：</b>官网网申</span>
+          <span><b>更新：</b>2025-10-05</span>
+        </div>
+        <div class="card-note">笔试截止：2025-10-08</div>
+        <div class="card-bottom">
+          <select><option>待笔试</option><option>已投递</option></select>
+          <a class="quick-link-btn" href="#">直达官网</a>
+          <span class="due-badge due-soon">剩 2 天</span>
+          <div class="card-actions">
+            <button class="icon-btn">编辑</button>
+            <button class="icon-btn del">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-seal seal-amber">笔试</div>
+      <div class="card-main">
+        <div class="card-top">
+          <div class="card-company">字节跳动</div>
+          <div class="card-location">北京</div>
+        </div>
+        <div class="card-job">内容运营</div>
+        <div class="card-meta">
+          <span><b>投递：</b>2025-09-18</span>
+          <span><b>渠道：</b>内推</span>
+          <span><b>更新：</b>2025-10-04</span>
+        </div>
+        <div class="card-note">内推码：ABCD1234</div>
+        <div class="card-bottom">
+          <select><option>待笔试</option><option>已投递</option></select>
+          <a class="quick-link-btn" href="#">直达官网</a>
+          <span class="due-badge due-normal">无截止</span>
+          <div class="card-actions">
+            <button class="icon-btn">编辑</button>
+            <button class="icon-btn del">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分组：待面试 -->
+  <div class="group-title">
+    <span class="gt-char">待面试</span>
+    <span class="gt-tag">INTERVIEW</span>
+    <span class="count serif">12</span>
+  </div>
+  <div class="card-list">
+    <div class="card">
+      <div class="card-seal seal-purple">面试</div>
+      <div class="card-main">
+        <div class="card-top">
+          <div class="card-company">阿里巴巴</div>
+          <div class="card-location">杭州</div>
+        </div>
+        <div class="card-job">用户运营</div>
+        <div class="card-meta">
+          <span><b>投递：</b>2025-09-15</span>
+          <span><b>渠道：</b>官网网申</span>
+          <span><b>更新：</b>2025-10-03</span>
+        </div>
+        <div class="card-note">面试时间：2025-10-10 14:00</div>
+        <div class="card-bottom">
+          <select><option>待面试</option><option>已投递</option></select>
+          <a class="quick-link-btn" href="#">直达官网</a>
+          <span class="due-badge due-normal">4 天后</span>
+          <div class="card-actions">
+            <button class="icon-btn">编辑</button>
+            <button class="icon-btn del">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分组：Offer -->
+  <div class="group-title">
+    <span class="gt-char">Offer</span>
+    <span class="gt-tag">OFFER</span>
+    <span class="count serif">3</span>
+  </div>
+  <div class="card-list">
+    <div class="card">
+      <div class="card-seal seal-jade">录用</div>
+      <div class="card-main">
+        <div class="card-top">
+          <div class="card-company">美团</div>
+          <div class="card-location">北京</div>
+        </div>
+        <div class="card-job">产品经理</div>
+        <div class="card-meta">
+          <span><b>投递：</b>2025-09-10</span>
+          <span><b>渠道：</b>内推</span>
+          <span><b>更新：</b>2025-10-01</span>
+        </div>
+        <div class="card-note">OC 已收到，待签三方</div>
+        <div class="card-bottom">
+          <select><option>Offer</option><option>已投递</option></select>
+          <a class="quick-link-btn" href="#">直达官网</a>
+          <span class="due-badge due-normal">已确认</span>
+          <div class="card-actions">
+            <button class="icon-btn">编辑</button>
+            <button class="icon-btn del">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 设计说明 -->
+  <div class="design-note">
+    <b>v2 整体重设计说明（与 v1 微调完全不同，这是一次换骨）</b><br>
+    · <b>设计语言：</b>暖纸编辑风 —— 米色宣纸底 + 墨色 + 朱红 + 细金边，参考你钦定过的红金审美。<br>
+    · <b>标题区：</b>宋体大字 + 顶部朱红书脊带 + 右上角"秋招"印章，仪式感拉满。<br>
+    · <b>统计区：</b>从一排小卡片改为"长卷"——一条白卡内竖线分隔，宋体大数字。<br>
+    · <b>操作台：</b>搜索框和功能按钮收进一张控制台卡片，筛选胶囊放第二行虚线分隔。<br>
+    · <b>记录卡片：</b>左侧加竖排"状态印章"（笔试/面试/录用），公司名宋体加粗。<br>
+    · <b>按钮配色：</b>新增=墨色、AI=绛紫、扫描=青玉、巡检=黛青，主强调统一朱红。<br>
+    · <b>完全保留：</b>所有功能按钮、12 状态体系、统计逻辑、报告栏、搜索筛选、数据结构，一律不动。
+  </div>
+
+</div>
+</body>
+</html>
