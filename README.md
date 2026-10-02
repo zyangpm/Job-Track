@@ -49,7 +49,7 @@
 
 **对你的豆包（或任意支持装技能的 agent）说一句话：**
 
-> 安装 GitHub 上的 zyangpm/job_track 项目
+> 安装 GitHub 上的 zyangpm/Job-Track 项目
 
 它就会自动完成全部安装：下载项目 → 装成 Skill → 安装依赖 → 启动服务 → 打开看板。装好之后你再说"帮我扫邮箱""查投递状态"，它就直接用这个 Skill 干活。
 

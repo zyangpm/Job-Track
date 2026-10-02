@@ -7,7 +7,7 @@ description: 秋招投递追踪工具。自动扫描邮箱（Gmail/QQ/163/126/Ou
 
 自动读取邮箱招聘邮件 → AI 提取公司/岗位/状态 → 生成日历看板。全程只读邮件，不发送不删除。
 
-> 安装：用户只需说一句「安装 GitHub 上的 zyangpm/job_track 项目」，由 agent 自动完成下载、装依赖、启动看板（详见 `README.md`）。
+> 安装：用户只需说一句「安装 GitHub 上的 zyangpm/Job-Track 项目」，由 agent 自动完成下载、装依赖、启动看板（详见 `README.md`）。
 
 ## 首次使用：引导用户配置
 
