@@ -8,7 +8,7 @@
 
 ## 效果预览
 
-![首页-干净状态](docs/screenshots/首页-干净状态.png)
+![首页-我的数据版](docs/screenshots/首页-我的数据版.png)
 
 ![设置弹窗（邮箱 + AI 模型配置）](docs/screenshots/设置弹窗.png)
 
