@@ -63,7 +63,11 @@
 
 **所有用户都是这一句话，不需要碰命令行。**
 
-> 不用 agent 的话，手动安装也只需要两步：仓库页点 **Code → Download ZIP** 解压 → 双击 `启动追踪表.bat`（首次使用先点右上角「设置」配邮箱授权码和模型 API Key，见下节）。依赖：Python 3.10+，见上文准备清单。
+> 不用 agent 的话，手动安装只需要三步：
+> 1. 仓库页点 **Code → Download ZIP** 解压
+> 2. 装依赖：打开命令行进入文件夹，运行 `pip install -r requirements.txt` 和 `playwright install chromium`
+> 3. 双击 `启动追踪表.bat`（首次使用先点右上角「设置」配邮箱授权码和模型 API Key，见下节）
+> 依赖：Python 3.10+（见上文准备清单）。
 
 ---
 
