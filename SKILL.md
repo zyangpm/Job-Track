@@ -30,7 +30,7 @@ pip install -r requirements.txt
 playwright install chromium
 python server.py
 ```
-然后浏览器打开 http://localhost:8768（或直接双击「启动追踪表.bat」，会自动找 Python、自动挑空闲端口并打开浏览器）
+然后浏览器打开 http://localhost:8788（或直接双击「启动追踪表.bat」，会自动找 Python、自动挑空闲端口并打开浏览器；8788 为分发版独立端口，与原版 job_track 的 8768 隔离）
 
 ## 功能
 

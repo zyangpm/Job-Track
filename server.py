@@ -3,7 +3,7 @@
 server.py — 追踪表本地小服务（AI添加 功能专用）
 ================================================
 用法：双击运行 或 python server.py
-然后浏览器打开：http://localhost:8768
+然后浏览器打开：http://localhost:8788
 页面上的「AI添加」按钮就能用了：粘网址+岗位，其余自动识别。
 
 关闭：在这个黑窗口按 Ctrl+C
@@ -21,8 +21,9 @@ from dashboard import (HTML_FILE, load_embedded, merge, csv_to_records, norm_com
 from add_job import fetch_page_text, extract_job_info
 import main as mail_main
 
-# 端口：支持命令行传入（启动追踪表.bat 会自动挑一个空闲端口），默认 8768
-PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8768
+# 端口：支持命令行传入（启动追踪表.bat 会自动挑一个空闲端口），默认 8788
+# 注意：8788 是分发版独立端口，与原版 job_track 用的 8768 彻底隔离
+PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8788
 SCAN_LOG = mail_main.SCAN_LOG
 LOGINS_FILE = Path(__file__).resolve().parent / "patrol" / "logins.json"   # 各公司登录信息（只存本机，不进交付模板）
 
@@ -64,7 +65,7 @@ class Handler(BaseHTTPRequestHandler):
         body = json.dumps(obj, ensure_ascii=False).encode("utf-8")
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Access-Control-Allow-Origin", "*")  # 允许 file:// 页面写回
+        self.send_header("Access-Control-Allow-Origin", "*")  # 仅本机；保存接口另有 Origin 校验防线
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Connection", "close")  # 发完即关连接，避免 keep-alive 延迟
         self.end_headers()
@@ -130,17 +131,35 @@ class Handler(BaseHTTPRequestHandler):
 
     def _handle_save(self):
         """浏览器每次新增/编辑/删除后，把全量记录写回 html 内嵌数据块。
-        合并策略：浏览器数据为主，但保留它不知道的 id（防止覆盖脚本刚同步的记录）。"""
+        合并策略：浏览器数据为主，但保留它不知道的 id（防止覆盖脚本刚同步的记录）。
+        隔离防线：只接受本服务页面（http://127.0.0.1:*）的保存；
+        拒绝 file:// 直接打开页面的写回（Origin: null），防止其他追踪表副本/旧页面把个人数据写进本模板。"""
         try:
             length = int(self.headers.get("Content-Length", 0))
+            origin = (self.headers.get("Origin") or "").strip().lower()
+            if origin.startswith("null"):
+                self._send_json(
+                    {"ok": False,
+                     "error": "拒绝 file:// 页面的写回：请用「启动追踪表.bat」启动后，访问弹出的网页使用（数据才能存进文件）"},
+                    403)
+                return
+            if origin and not (origin.startswith("http://127.0.0.1")
+                               or origin.startswith("http://localhost")):
+                self._send_json({"ok": False, "error": "拒绝来自非本服务页面的写入"}, 403)
+                return
+
             data = json.loads(self.rfile.read(length).decode("utf-8"))
             html_text = HTML_FILE.read_text(encoding="utf-8")
             embedded, match = load_embedded(html_text)
 
             incoming = data.get("records", [])
             incoming_ids = {r.get("id") for r in incoming}
-            # 保留浏览器不知道的（脚本刚加进去的）记录
-            kept = [r for r in embedded["records"] if r.get("id") not in incoming_ids]
+            # 前端传回的"已删除 id"名单：这些记录永远不再恢复（修复"删了又复活"）
+            deleted_ids = set(data.get("deletedIds") or [])
+            incoming_ids |= deleted_ids
+            # 保留浏览器不知道的（脚本刚加进去的）记录，但被删除的除外
+            kept = [r for r in embedded["records"]
+                    if r.get("id") not in incoming_ids and r.get("id") not in deleted_ids]
             embedded["records"] = incoming + kept
 
             # 保存时更新版本号：这样任何打开的页面都能看出"文件比我的缓存新" → 以文件为准
@@ -153,6 +172,10 @@ class Handler(BaseHTTPRequestHandler):
                     embedded["records"], embedded.get("statuses"))
             except Exception:
                 pass
+            # 去重可能以另一个 id 恢复已删公司 → 再滤一次删除名单
+            if deleted_ids:
+                embedded["records"] = [r for r in embedded["records"]
+                                       if r.get("id") not in deleted_ids]
 
             new_html = (html_text[:match.start(1)]
                         + json.dumps(embedded, ensure_ascii=False)
