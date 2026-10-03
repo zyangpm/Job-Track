@@ -6,22 +6,6 @@
 
 ---
 
-## 效果预览
-
-![首页-我的数据版](docs/screenshots/首页-我的数据版.png)
-
-![统计面板-下半](docs/screenshots/统计面板-下半.png)
-
-![待办提醒](docs/screenshots/待办提醒.png)
-
-![日程日历](docs/screenshots/日程日历.png)
-
-![工具栏与状态筛选](docs/screenshots/工具栏与状态筛选.png)
-
-![设置弹窗（邮箱 + AI 模型配置）](docs/screenshots/设置弹窗.png)
-
----
-
 ## 一、你需要准备什么
 
 ### 1. Python 3.10 或更高版本
