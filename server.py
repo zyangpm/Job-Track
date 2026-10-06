@@ -187,6 +187,12 @@ class Handler(BaseHTTPRequestHandler):
 
     def _handle_scan(self):
         """一键扫描邮箱：调 mail_main.run_scan()，跑完后自动同步进 html"""
+        # 配置检查：没填邮箱/专用密码时给友好提示，而不是抛 Python 内部报错
+        mail_ok = bool((getattr(mail_main, "GMAIL_EMAIL", None) or "").strip()
+                       and (getattr(mail_main, "GMAIL_APP_PASSWORD", None) or "").strip())
+        if not mail_ok:
+            self._send_json({"ok": False, "error": "还没有配置邮箱，请先点右上角「设置」，填邮箱地址和应用专用密码/授权码后再扫描（生成教程在设置弹窗里）"})
+            return
         try:
             report = mail_main.run_scan()
             # 同步进追踪表（按"状态变化"同步，快照保护手动修改）
