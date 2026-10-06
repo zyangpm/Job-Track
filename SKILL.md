@@ -14,6 +14,7 @@ compatibility: Python 3.10+，需 playwright（chromium）
 
 - 用户想整理/追踪秋招投递记录、扫描招聘邮件、查笔试面试状态、生成投递看板/日历
 - 用户提到"帮我扫邮箱""投递状态""校招进度""招聘邮件整理"
+- **与 [JobHuntBot](https://github.com/DanielPan12/JobHuntBot) 配合**：JobHuntBot 负责找岗位/执行投递，本 skill 负责投递后的记录与追踪（扫邮箱 → 状态 → 日历看板）。用户提到"配合 JobHuntBot 使用""投递后追踪"时，明确分工：一个管投、一个管追。
 
 ## 依赖与兼容
 
