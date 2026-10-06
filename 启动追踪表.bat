@@ -31,10 +31,21 @@ set "PYCMD=python"
 goto pyfound
 :trypy
 where py >nul 2>nul
-if errorlevel 1 goto nopython
+if errorlevel 1 goto probe_local
 py -3 -c "import sys" >nul 2>nul
-if errorlevel 1 goto nopython
+if errorlevel 1 goto probe_local
 set "PYCMD=py -3"
+goto pyfound
+
+:probe_local
+rem ---- u81eau52a8u63a2u6d4bu672cu673au5e38u89c1 Python u5b89u88c5u8defu5f84uff08u4e0du4f9du8d56 PATHuff09----
+for /d %%d in ("%LOCALAPPDATA%\Programs\Python\Python*") do (
+  if exist "%%d\python.exe" (
+    "%%d\python.exe" -c "import sys" >nul 2>nul
+    if not errorlevel 1 (set "PYCMD=%%d\python.exe" & goto pyfound)
+  )
+)
+goto nopython
 :pyfound
 
 rem ---- 找一个空闲端口（默认 8788，占用则往上找，8788-8799）----
