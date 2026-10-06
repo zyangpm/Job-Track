@@ -257,7 +257,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if not patrol_mod.CONFIG_PATH.exists():
                 self._send_json({"ok": False,
-                                 "error": "官网巡检尚未配置：请先在 patrol 文件夹里创建 config.json（巡检公司清单）和 logins.json（各公司登录账号），配置方法见 patrol/README.md"}, 400)
+                                 "error": "还没有配置巡检公司：请点上面的「登录信息」按钮，添加要巡检的公司（公司名、登录网址、账号密码），保存后即可开始官网巡检"}, 400)
                 return
             cfg = json.loads(patrol_mod.CONFIG_PATH.read_text(encoding="utf-8"))
             if not patrol_mod.guard(cfg, force=False):
